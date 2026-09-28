@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Pradeep's NEET Tracker</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header>
+    <h1>🩺 Pradeep's NEET Tracker</h1>
+    <p>Your Personal Backlog & Syllabus Tracker</p>
+</header>
+
+<main>
+
+    <!-- OVERALL DASHBOARD -->
+    <section class="dashboard">
+
+        <div class="stat-card">
+            <h3>📚 Total Lectures</h3>
+            <p id="totalLectures">0</p>
+        </div>
+
+        <div class="stat-card completed">
+            <h3>✅ Completed</h3>
+            <p id="completedLectures">0</p>
+        </div>
+
+        <div class="stat-card backlog">
+            <h3>🔴 Backlog</h3>
+            <p id="backlogLectures">0</p>
+        </div>
+
+        <div class="stat-card syllabus">
+            <h3>📊 Syllabus</h3>
+            <p id="syllabusPercent">0%</p>
+        </div>
+
+    </section>
+
+
+    <!-- OVERALL PROGRESS -->
+    <section class="overall-box">
+
+        <div class="section-title">
+            <h2>📈 Overall Syllabus Progress</h2>
+            <span id="overallPercent">0%</span>
+        </div>
+
+        <div class="progress-bg">
+            <div id="overallProgress" class="progress-fill"></div>
+        </div>
+
+    </section>
+
+
+    <!-- SUBJECTS -->
+    <section>
+
+        <h2 class="heading">📖 Subject Progress</h2>
+
+        <div class="subjects">
+
+            <div class="subject-card physics">
+                <div class="subject-icon">⚡</div>
+                <h2>Physics</h2>
+                <p id="physicsInfo">0 / 0 lectures</p>
+
+                <div class="progress-bg small">
+                    <div id="physicsProgress" class="progress-fill"></div>
+                </div>
+
+                <p id="physicsPercent">0%</p>
+            </div>
+
+
+            <div class="subject-card chemistry">
+                <div class="subject-icon">🧪</div>
+                <h2>Chemistry</h2>
+                <p id="chemistryInfo">0 / 0 lectures</p>
+
+                <div class="progress-bg small">
+                    <div id="chemistryProgress" class="progress-fill"></div>
+                </div>
+
+                <p id="chemistryPercent">0%</p>
+            </div>
+
+
+            <div class="subject-card biology">
+                <div class="subject-icon">🧬</div>
+                <h2>Biology</h2>
+                <p id="biologyInfo">0 / 0 lectures</p>
+
+                <div class="progress-bg small">
+                    <div id="biologyProgress" class="progress-fill"></div>
+                </div>
+
+                <p id="biologyPercent">0%</p>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ADD CHAPTER -->
+    <section class="add-section">
+
+        <h2>➕ Add / Update Chapter</h2>
+
+        <p class="hint">
+            Yahan apne actual lectures enter karo. Backlog automatically calculate hoga.
+        </p>
+
+        <div class="form-grid">
+
+            <div>
+                <label>Subject</label>
+
+                <select id="subject">
+                    <option value="Physics">Physics</option>
+                    <option value="Chemistry">Chemistry</option>
+                    <option value="Biology">Biology</option>
+                </select>
+            </div>
+
+
+            <div>
+                <label>Chapter Name</label>
+
+                <input
+                    type="text"
+                    id="chapter"
+                    placeholder="e.g. Laws of Motion"
+                >
+            </div>
+
+
+            <div>
+                <label>Total Lectures</label>
+
+                <input
+                    type="number"
+                    id="total"
+                    min="1"
+                    placeholder="e.g. 10"
+                >
+            </div>
+
+
+            <div>
+                <label>Completed Lectures</label>
+
+                <input
+                    type="number"
+                    id="completed"
+                    min="0"
+                    placeholder="e.g. 3"
+                >
+            </div>
+
+        </div>
+
+
+        <button class="add-btn" onclick="addChapter()">
+            ➕ Add / Update Chapter
+        </button>
+
+    </section>
+
+
+    <!-- CHAPTERS -->
+    <section>
+
+        <div class="chapter-header">
+            <h2 class="heading">📚 My Syllabus</h2>
+
+            <button class="reset-btn" onclick="resetData()">
+                🗑️ Reset All Data
+            </button>
+        </div>
+
+
+        <div id="chapterList">
+
+            <div class="empty">
+                <h3>📭 No chapters added yet</h3>
+                <p>Upar se apna chapter add karo.</p>
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<footer>
+    <p>🎯 NEET Tracker • Study Hard • Stay Consistent</p>
+</footer>
+
+
+<script src="script.js"></script>
+
+</body>
+</html>
