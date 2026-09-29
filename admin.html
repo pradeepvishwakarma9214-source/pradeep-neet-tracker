@@ -1,0 +1,2301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Admin Panel - DELIGHT MINDSET CLASSES</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  background:#f4f6fa;
+  color:#172033;
+  line-height:1.6;
+}
+
+.container{
+  width:min(1100px,92%);
+  margin:auto;
+}
+
+.admin-header{
+  background:#101828;
+  color:white;
+  padding:18px 0;
+}
+
+.header-inner{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:20px;
+}
+
+.header-title h1{
+  font-size:22px;
+}
+
+.header-title p{
+  color:#b7c0cc;
+  font-size:13px;
+  margin-top:3px;
+}
+
+.header-buttons{
+  display:flex;
+  gap:10px;
+  align-items:center;
+}
+
+.back-btn,
+.logout-btn{
+  color:white;
+  text-decoration:none;
+  background:#4355d8;
+  padding:10px 15px;
+  border-radius:8px;
+  font-size:13px;
+  font-weight:700;
+  border:0;
+  cursor:pointer;
+}
+
+.logout-btn{
+  background:#b42318;
+}
+
+main{
+  padding:40px 0 70px;
+}
+
+.page-title{
+  margin-bottom:25px;
+}
+
+.page-title h2{
+  font-size:30px;
+}
+
+.page-title p{
+  color:#667085;
+  margin-top:5px;
+}
+
+.login-box{
+  width:min(450px,100%);
+  margin:50px auto;
+  background:white;
+  border:1px solid #e0e5ed;
+  border-radius:16px;
+  padding:30px;
+  box-shadow:0 5px 20px rgba(30,45,80,.06);
+}
+
+.login-box h2{
+  margin-bottom:5px;
+}
+
+.login-box p{
+  color:#667085;
+  font-size:14px;
+  margin-bottom:20px;
+}
+
+.admin-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:20px;
+}
+
+.admin-card{
+  background:white;
+  border:1px solid #e0e5ed;
+  border-radius:16px;
+  padding:25px;
+  box-shadow:0 5px 20px rgba(30,45,80,.05);
+}
+
+.admin-card h3{
+  margin-bottom:7px;
+}
+
+.admin-card-description{
+  color:#667085;
+  font-size:14px;
+  margin-bottom:20px;
+}
+
+.form-group{
+  margin-bottom:15px;
+}
+
+.form-group label{
+  display:block;
+  font-size:13px;
+  font-weight:700;
+  margin-bottom:6px;
+}
+
+.form-group select,
+.form-group input,
+.form-group textarea{
+  width:100%;
+  padding:12px;
+  border:1px solid #d9dee8;
+  border-radius:9px;
+  font-size:14px;
+  outline:none;
+  background:white;
+  color:#172033;
+}
+
+.form-group select:focus,
+.form-group input:focus,
+.form-group textarea:focus{
+  border-color:#4355d8;
+  box-shadow:0 0 0 3px rgba(67,85,216,.08);
+}
+
+.form-group textarea{
+  min-height:90px;
+  resize:vertical;
+}
+
+.file-box{
+  border:2px dashed #cfd5df;
+  border-radius:12px;
+  padding:20px;
+  background:#fafbfc;
+  text-align:center;
+}
+
+.file-box input[type="file"]{
+  width:100%;
+  padding:8px;
+  cursor:pointer;
+}
+
+.file-help{
+  color:#667085;
+  font-size:12px;
+  margin-top:8px;
+}
+
+.selected-file{
+  margin-top:10px;
+  padding:10px;
+  border-radius:8px;
+  background:#eef1ff;
+  color:#4355d8;
+  font-size:13px;
+  font-weight:600;
+  display:none;
+}
+
+.btn{
+  border:0;
+  border-radius:9px;
+  padding:11px 17px;
+  cursor:pointer;
+  font-weight:700;
+  font-size:14px;
+}
+
+.primary{
+  background:#4355d8;
+  color:white;
+}
+
+.primary:hover{
+  background:#3548c5;
+}
+
+.primary:disabled{
+  opacity:.6;
+  cursor:not-allowed;
+}
+
+.message{
+  display:none;
+  margin-top:15px;
+  padding:12px 14px;
+  border-radius:9px;
+  font-size:14px;
+}
+
+.success{
+  display:block;
+  background:#ecfdf3;
+  color:#027a48;
+  border:1px solid #abefc6;
+}
+
+.error{
+  display:block;
+  background:#fef3f2;
+  color:#b42318;
+  border:1px solid #fecdca;
+}
+
+.info-box{
+  background:#f8fafc;
+  border:1px dashed #d0d5dd;
+  border-radius:10px;
+  padding:15px;
+  color:#667085;
+  font-size:13px;
+  line-height:1.7;
+}
+
+.saved-materials{
+  margin-top:25px;
+}
+
+.saved-materials h3{
+  margin-bottom:15px;
+}
+
+.material-list{
+  display:grid;
+  gap:10px;
+}
+
+.material-item{
+  border:1px solid #e0e5ed;
+  border-radius:10px;
+  padding:14px;
+  background:#fafbfc;
+}
+
+.material-item strong{
+  display:block;
+  margin-bottom:4px;
+}
+
+.material-item span{
+  display:block;
+  color:#667085;
+  font-size:12px;
+}
+
+.material-item small{
+  display:block;
+  color:#98a2b3;
+  margin-top:5px;
+}
+
+.announcement-list{
+  margin-top:20px;
+  display:grid;
+  gap:10px;
+}
+
+.announcement-item{
+  border:1px solid #e0e5ed;
+  border-radius:10px;
+  padding:14px;
+  background:#fafbfc;
+}
+
+.announcement-item strong{
+  display:block;
+  margin-bottom:5px;
+}
+
+.announcement-item p{
+  color:#667085;
+  font-size:13px;
+  margin-bottom:8px;
+}
+
+.announcement-item small{
+  color:#98a2b3;
+  display:block;
+  margin-bottom:10px;
+}
+
+.announcement-actions,
+.result-actions{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+}
+
+.small-btn{
+  border:0;
+  border-radius:7px;
+  padding:7px 10px;
+  cursor:pointer;
+  font-size:12px;
+  font-weight:700;
+}
+
+.pin-btn{
+  background:#eef1ff;
+  color:#4355d8;
+}
+
+.active-btn{
+  background:#ecfdf3;
+  color:#027a48;
+}
+
+.delete-btn{
+  background:#fef3f2;
+  color:#b42318;
+}
+
+.result-list{
+  margin-top:20px;
+  display:grid;
+  gap:10px;
+}
+
+.result-item{
+  border:1px solid #e0e5ed;
+  border-radius:10px;
+  padding:15px;
+  background:#fafbfc;
+}
+
+.result-item strong{
+  display:block;
+  margin-bottom:5px;
+}
+
+.result-item span{
+  display:block;
+  color:#667085;
+  font-size:13px;
+}
+
+.result-item small{
+  display:block;
+  color:#98a2b3;
+  margin-top:6px;
+  margin-bottom:10px;
+}
+
+.logged-user{
+  background:#eef1ff;
+  color:#4355d8;
+  border-radius:8px;
+  padding:8px 12px;
+  font-size:12px;
+  font-weight:700;
+}
+
+footer{
+  background:#101828;
+  color:#b7c0cc;
+  padding:25px 0;
+  text-align:center;
+  font-size:13px;
+}
+
+.hidden{
+  display:none !important;
+}
+
+@media(max-width:750px){
+
+  .admin-grid{
+    grid-template-columns:1fr;
+  }
+
+  .header-inner{
+    align-items:flex-start;
+    flex-direction:column;
+  }
+
+  .header-buttons{
+    width:100%;
+    flex-wrap:wrap;
+  }
+
+  .back-btn,
+  .logout-btn{
+    flex:1;
+    text-align:center;
+  }
+
+  .logged-user{
+    width:100%;
+  }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header class="admin-header">
+
+  <div class="container header-inner">
+
+    <div class="header-title">
+
+      <h1>🔐 Admin Panel</h1>
+
+      <p>DELIGHT MINDSET CLASSES</p>
+
+    </div>
+
+    <div class="header-buttons">
+
+      <span
+        id="loggedUser"
+        class="logged-user hidden"
+      ></span>
+
+      <a
+        href="index.html"
+        class="back-btn"
+      >
+        ← Website
+      </a>
+
+      <button
+        id="logoutButton"
+        class="logout-btn hidden"
+        onclick="logoutAdmin()"
+      >
+        Logout
+      </button>
+
+    </div>
+
+  </div>
+
+</header>
+
+
+<section id="loginSection">
+
+  <div class="container">
+
+    <div class="login-box">
+
+      <h2>🔐 Admin Login</h2>
+
+      <p>
+        Only authorised admin can access the dashboard.
+      </p>
+
+      <div class="form-group">
+
+        <label>Admin Email</label>
+
+        <input
+          type="email"
+          id="loginEmail"
+          placeholder="Enter admin email"
+        >
+
+      </div>
+
+      <div class="form-group">
+
+        <label>Password</label>
+
+        <input
+          type="password"
+          id="loginPassword"
+          placeholder="Enter password"
+        >
+
+      </div>
+
+      <button
+        id="loginButton"
+        class="btn primary"
+        onclick="loginAdmin()"
+      >
+        Login
+      </button>
+
+      <div
+        id="loginMessage"
+        class="message"
+      ></div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<main
+  id="dashboardSection"
+  class="hidden"
+>
+
+  <div class="container">
+
+    <div class="page-title">
+
+      <h2>Dashboard</h2>
+
+      <p>Website content management</p>
+
+    </div>
+
+
+    <div class="admin-grid">
+
+
+      <!-- STUDY MATERIAL -->
+
+      <div class="admin-card">
+
+        <h3>📚 Add Study Material</h3>
+
+        <p class="admin-card-description">
+          Upload Notes, Questions, DPP, Practice Sheets,
+          PYQs, Test Papers and Important Questions.
+        </p>
+
+        <div class="form-group">
+
+          <label>Select Class</label>
+
+          <select id="materialClass">
+
+            <option value="">
+              Select Class
+            </option>
+
+            <option value="9">
+              Class 9
+            </option>
+
+            <option value="10">
+              Class 10
+            </option>
+
+            <option value="11">
+              Class 11
+            </option>
+
+            <option value="12">
+              Class 12
+            </option>
+
+          </select>
+
+        </div>
+
+        <div class="form-group">
+
+          <label>Select Subject</label>
+
+          <select id="materialSubject">
+
+            <option value="">
+              Select Subject
+            </option>
+
+          </select>
+
+        </div>
+
+        <div class="form-group">
+
+          <label>Material Type</label>
+
+          <select id="materialType">
+
+            <option value="">
+              Select Material Type
+            </option>
+
+            <option value="Notes">
+              Notes
+            </option>
+
+            <option value="Questions">
+              Questions
+            </option>
+
+            <option value="DPP">
+              DPP
+            </option>
+
+            <option value="Practice Sheets">
+              Practice Sheets
+            </option>
+
+            <option value="PYQs">
+              PYQs
+            </option>
+
+            <option value="Test Papers">
+              Test Papers
+            </option>
+
+            <option value="Important Questions">
+              Important Questions
+            </option>
+
+          </select>
+
+        </div>
+
+        <div class="form-group">
+
+          <label>Material Title</label>
+
+          <input
+            type="text"
+            id="materialTitle"
+            placeholder="Example: Chapter 1 Notes"
+          >
+
+        </div>
+
+        <div class="form-group">
+
+          <label>Select File</label>
+
+          <div class="file-box">
+
+            <input
+              type="file"
+              id="materialFile"
+              accept=".pdf,.doc,.docx,.ppt,.pptx,.jpg,.jpeg,.png"
+            >
+
+            <div class="file-help">
+              PDF, DOC, DOCX, PPT, PPTX, JPG or PNG
+              <br>
+              Maximum size: 10 MB
+            </div>
+
+            <div
+              id="selectedFile"
+              class="selected-file"
+            ></div>
+
+          </div>
+
+        </div>
+
+        <button
+          id="uploadButton"
+          class="btn primary"
+          onclick="saveMaterial()"
+        >
+          📤 Upload Material
+        </button>
+
+        <div
+          id="materialMessage"
+          class="message"
+        ></div>
+
+      </div>
+
+
+      <!-- ANNOUNCEMENT -->
+
+      <div class="admin-card">
+
+        <h3>📢 Announcement</h3>
+
+        <p class="admin-card-description">
+          Create and manage announcements for students.
+        </p>
+
+        <div class="form-group">
+
+          <label>Announcement Title</label>
+
+          <input
+            type="text"
+            id="announcementTitle"
+            placeholder="Example: Test on Sunday"
+          >
+
+        </div>
+
+        <div class="form-group">
+
+          <label>Announcement Details</label>
+
+          <textarea
+            id="announcementText"
+            placeholder="Write announcement details..."
+          ></textarea>
+
+        </div>
+
+        <button
+          id="announcementButton"
+          class="btn primary"
+          onclick="saveAnnouncement()"
+        >
+          📢 Publish Announcement
+        </button>
+
+        <div
+          id="announcementMessage"
+          class="message"
+        ></div>
+
+        <div
+          id="announcementList"
+          class="announcement-list"
+        ></div>
+
+      </div>
+
+
+      <!-- RESULTS -->
+
+      <div class="admin-card">
+
+        <h3>🏆 Add Result</h3>
+
+        <p class="admin-card-description">
+          Add and manage Class 10th and Class 12th student results.
+        </p>
+
+        <div class="form-group">
+
+          <label>Select Class</label>
+
+          <select id="resultClass">
+
+            <option value="">
+              Select Class
+            </option>
+
+            <option value="10">
+              Class 10
+            </option>
+
+            <option value="12">
+              Class 12
+            </option>
+
+          </select>
+
+        </div>
+
+        <div class="form-group">
+
+          <label>Student Name</label>
+
+          <input
+            type="text"
+            id="studentName"
+            placeholder="Enter student name"
+          >
+
+        </div>
+
+        <div class="form-group">
+
+          <label>Roll Number</label>
+
+          <input
+            type="text"
+            id="rollNumber"
+            placeholder="Enter roll number"
+          >
+
+        </div>
+
+        <div class="form-group">
+
+          <label>Marks</label>
+
+          <input
+            type="text"
+            id="marks"
+            placeholder="Example: 475 / 500"
+          >
+
+        </div>
+
+        <div class="form-group">
+
+          <label>Percentage</label>
+
+          <input
+            type="text"
+            id="percentage"
+            placeholder="Example: 95%"
+          >
+
+        </div>
+
+        <div class="form-group">
+
+          <label>Rank</label>
+
+          <input
+            type="text"
+            id="rank"
+            placeholder="Example: 1st"
+          >
+
+        </div>
+
+        <button
+          id="resultButton"
+          class="btn primary"
+          onclick="saveResult()"
+        >
+          🏆 Add Result
+        </button>
+
+        <div
+          id="resultMessage"
+          class="message"
+        ></div>
+
+        <div
+          id="resultList"
+          class="result-list"
+        ></div>
+
+      </div>
+
+
+      <!-- TEACHERS -->
+
+      <div class="admin-card">
+
+        <h3>👨‍🏫 Teachers</h3>
+
+        <p class="admin-card-description">
+          Manage teacher information.
+        </p>
+
+        <div class="info-box">
+
+          Teacher management will be connected
+          with the online database later.
+
+          <br><br>
+
+          Current teachers are already displayed
+          on the main website.
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- MATERIAL LIST -->
+
+    <div class="admin-card saved-materials">
+
+      <h3>📂 Uploaded Materials</h3>
+
+      <div
+        id="savedMaterials"
+        class="material-list"
+      ></div>
+
+    </div>
+
+  </div>
+
+</main>
+
+
+<footer>
+
+  DELIGHT MINDSET CLASSES • Admin Panel
+
+</footer>
+
+
+<script>
+
+/* =====================================================
+   SUPABASE CONFIG
+===================================================== */
+
+const SUPABASE_URL =
+  "https://sbckafdncwclnchvzubl.supabase.co";
+
+const SUPABASE_PUBLISHABLE_KEY =
+  "sb_publishable_Yvlr5Wdv8X4ViOgPyD3MFA_6NnRl9z6";
+
+const supabaseClient =
+  window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+  );
+
+
+/* =====================================================
+   SUBJECT DATA
+===================================================== */
+
+const subjects = {
+
+  "9":[
+    "Maths",
+    "Science",
+    "English"
+  ],
+
+  "10":[
+    "Maths",
+    "Science",
+    "English"
+  ],
+
+  "11":[
+    "Physics",
+    "Chemistry",
+    "Maths",
+    "Biology",
+    "English"
+  ],
+
+  "12":[
+    "Physics",
+    "Chemistry",
+    "Maths",
+    "Biology",
+    "English"
+  ]
+
+};
+
+
+/* =====================================================
+   CLASS CHANGE
+===================================================== */
+
+document
+  .getElementById("materialClass")
+  .addEventListener("change",function(){
+
+    const classValue =
+      this.value;
+
+    const subjectSelect =
+      document.getElementById("materialSubject");
+
+    subjectSelect.innerHTML =
+      '<option value="">Select Subject</option>';
+
+    if(classValue === ""){
+      return;
+    }
+
+    subjects[classValue].forEach(function(subject){
+
+      const option =
+        document.createElement("option");
+
+      option.value =
+        subject;
+
+      option.textContent =
+        subject;
+
+      subjectSelect.appendChild(option);
+
+    });
+
+  });
+
+
+/* =====================================================
+   FILE SELECT
+===================================================== */
+
+document
+  .getElementById("materialFile")
+  .addEventListener("change",function(){
+
+    const file =
+      this.files[0];
+
+    const selectedFile =
+      document.getElementById("selectedFile");
+
+    if(!file){
+
+      selectedFile.style.display =
+        "none";
+
+      selectedFile.textContent =
+        "";
+
+      return;
+
+    }
+
+    selectedFile.style.display =
+      "block";
+
+    selectedFile.textContent =
+      "📄 " + file.name;
+
+  });
+
+
+/* =====================================================
+   LOGIN
+===================================================== */
+
+async function loginAdmin(){
+
+  const email =
+    document
+      .getElementById("loginEmail")
+      .value
+      .trim();
+
+  const password =
+    document
+      .getElementById("loginPassword")
+      .value;
+
+  const message =
+    document
+      .getElementById("loginMessage");
+
+  const button =
+    document
+      .getElementById("loginButton");
+
+  message.className =
+    "message";
+
+  if(
+    email === "" ||
+    password === ""
+  ){
+
+    message.textContent =
+      "Please enter email and password.";
+
+    message.classList.add("error");
+
+    return;
+
+  }
+
+  button.disabled =
+    true;
+
+  button.textContent =
+    "Logging in...";
+
+  try{
+
+    const { data, error } =
+      await supabaseClient.auth.signInWithPassword({
+
+        email:email,
+
+        password:password
+
+      });
+
+    if(error){
+
+      message.textContent =
+        error.message;
+
+      message.classList.add("error");
+
+      return;
+
+    }
+
+    if(data && data.session){
+
+      showDashboard(
+        data.user
+      );
+
+    }
+
+  }catch(error){
+
+    console.error(error);
+
+    message.textContent =
+      "Login failed: " +
+      (error.message || "Unknown error");
+
+    message.classList.add("error");
+
+  }finally{
+
+    button.disabled =
+      false;
+
+    button.textContent =
+      "Login";
+
+  }
+
+}
+
+
+/* =====================================================
+   SHOW DASHBOARD
+===================================================== */
+
+function showDashboard(user){
+
+  document
+    .getElementById("loginSection")
+    .classList.add("hidden");
+
+  document
+    .getElementById("dashboardSection")
+    .classList.remove("hidden");
+
+  document
+    .getElementById("logoutButton")
+    .classList.remove("hidden");
+
+  const loggedUser =
+    document.getElementById("loggedUser");
+
+  loggedUser.textContent =
+    "👤 " + (user.email || "Admin");
+
+  loggedUser.classList.remove("hidden");
+
+  loadMaterials();
+
+  loadAnnouncements();
+
+  loadResults();
+
+}
+
+
+/* =====================================================
+   LOGOUT
+===================================================== */
+
+async function logoutAdmin(){
+
+  await supabaseClient.auth.signOut();
+
+  document
+    .getElementById("dashboardSection")
+    .classList.add("hidden");
+
+  document
+    .getElementById("loginSection")
+    .classList.remove("hidden");
+
+  document
+    .getElementById("logoutButton")
+    .classList.add("hidden");
+
+  document
+    .getElementById("loggedUser")
+    .classList.add("hidden");
+
+}
+
+
+/* =====================================================
+   SAVE MATERIAL
+===================================================== */
+
+async function saveMaterial(){
+
+  const classValue =
+    document
+      .getElementById("materialClass")
+      .value;
+
+  const subject =
+    document
+      .getElementById("materialSubject")
+      .value;
+
+  const type =
+    document
+      .getElementById("materialType")
+      .value;
+
+  const title =
+    document
+      .getElementById("materialTitle")
+      .value
+      .trim();
+
+  const fileInput =
+    document
+      .getElementById("materialFile");
+
+  const file =
+    fileInput.files[0];
+
+  const message =
+    document
+      .getElementById("materialMessage");
+
+  const button =
+    document
+      .getElementById("uploadButton");
+
+  message.className =
+    "message";
+
+  if(
+    classValue === "" ||
+    subject === "" ||
+    type === "" ||
+    title === "" ||
+    !file
+  ){
+
+    message.textContent =
+      "Please select Class, Subject, Material Type, Title and File.";
+
+    message.classList.add("error");
+
+    return;
+
+  }
+
+  const maxSize =
+    10 * 1024 * 1024;
+
+  if(file.size > maxSize){
+
+    message.textContent =
+      "File size must be less than 10 MB.";
+
+    message.classList.add("error");
+
+    return;
+
+  }
+
+  button.disabled =
+    true;
+
+  button.textContent =
+    "Uploading...";
+
+  try{
+
+    const safeFileName =
+      file.name
+        .replace(/[^a-zA-Z0-9._-]/g,"_");
+
+    const filePath =
+      classValue +
+      "/" +
+      subject.replace(/[^a-zA-Z0-9_-]/g,"_") +
+      "/" +
+      type.replace(/[^a-zA-Z0-9_-]/g,"_") +
+      "/" +
+      Date.now() +
+      "_" +
+      safeFileName;
+
+    const { error:uploadError } =
+      await supabaseClient
+        .storage
+        .from("study-materials")
+        .upload(
+          filePath,
+          file,
+          {
+            cacheControl:"3600",
+            upsert:false,
+            contentType:file.type || "application/octet-stream"
+          }
+        );
+
+    if(uploadError){
+      throw uploadError;
+    }
+
+    const { error:databaseError } =
+      await supabaseClient
+        .from("materials")
+        .insert({
+
+          class:classValue,
+
+          subject:subject,
+
+          material_type:type,
+
+          title:title,
+
+          file_name:file.name,
+
+          file_path:filePath
+
+        });
+
+    if(databaseError){
+      throw databaseError;
+    }
+
+    message.textContent =
+      "✅ Material uploaded successfully!";
+
+    message.classList.add("success");
+
+    document
+      .getElementById("materialTitle")
+      .value = "";
+
+    fileInput.value = "";
+
+    document
+      .getElementById("selectedFile")
+      .style.display = "none";
+
+    document
+      .getElementById("selectedFile")
+      .textContent = "";
+
+    await loadMaterials();
+
+  }catch(error){
+
+    console.error(error);
+
+    message.textContent =
+      "Upload failed: " +
+      (error.message || "Unknown error");
+
+    message.classList.add("error");
+
+  }
+
+  button.disabled =
+    false;
+
+  button.textContent =
+    "📤 Upload Material";
+
+}
+
+
+/* =====================================================
+   LOAD MATERIALS
+===================================================== */
+
+async function loadMaterials(){
+
+  const container =
+    document.getElementById("savedMaterials");
+
+  container.innerHTML = `
+
+    <div class="info-box">
+      Loading materials...
+    </div>
+
+  `;
+
+  const { data, error } =
+    await supabaseClient
+      .from("materials")
+      .select("*")
+      .order(
+        "created_at",
+        {
+          ascending:false
+        }
+      );
+
+  if(error){
+
+    container.innerHTML = `
+
+      <div class="info-box">
+        Could not load materials.
+        <br><br>
+        ${escapeHTML(error.message)}
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+  if(!data || data.length === 0){
+
+    container.innerHTML = `
+
+      <div class="info-box">
+        अभी कोई material upload नहीं किया गया है।
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+  container.innerHTML = "";
+
+  data.forEach(function(material){
+
+    const item =
+      document.createElement("div");
+
+    item.className =
+      "material-item";
+
+    const date =
+      material.created_at
+        ? new Date(
+            material.created_at
+          ).toLocaleDateString("en-IN")
+        : "";
+
+    item.innerHTML = `
+
+      <strong>
+        📄 ${escapeHTML(material.title)}
+      </strong>
+
+      <span>
+        Class ${escapeHTML(material.class)}
+        •
+        ${escapeHTML(material.subject)}
+        •
+        ${escapeHTML(material.material_type)}
+      </span>
+
+      <small>
+        File: ${escapeHTML(material.file_name)}
+        •
+        Added: ${escapeHTML(date)}
+      </small>
+
+    `;
+
+    container.appendChild(item);
+
+  });
+
+}
+
+
+/* =====================================================
+   SAVE ANNOUNCEMENT
+===================================================== */
+
+async function saveAnnouncement(){
+
+  const title =
+    document
+      .getElementById("announcementTitle")
+      .value
+      .trim();
+
+  const text =
+    document
+      .getElementById("announcementText")
+      .value
+      .trim();
+
+  const message =
+    document
+      .getElementById("announcementMessage");
+
+  const button =
+    document
+      .getElementById("announcementButton");
+
+  message.className =
+    "message";
+
+  if(
+    title === "" ||
+    text === ""
+  ){
+
+    message.textContent =
+      "Please enter announcement title and details.";
+
+    message.classList.add("error");
+
+    return;
+
+  }
+
+  button.disabled =
+    true;
+
+  button.textContent =
+    "Publishing...";
+
+  try{
+
+    const { error } =
+      await supabaseClient
+        .from("announcements")
+        .insert({
+
+          title:title,
+
+          message:text,
+
+          is_pinned:false,
+
+          is_active:true
+
+        });
+
+    if(error){
+      throw error;
+    }
+
+    message.textContent =
+      "✅ Announcement published successfully!";
+
+    message.classList.add("success");
+
+    document
+      .getElementById("announcementTitle")
+      .value = "";
+
+    document
+      .getElementById("announcementText")
+      .value = "";
+
+    await loadAnnouncements();
+
+  }catch(error){
+
+    console.error(error);
+
+    message.textContent =
+      "Announcement failed: " +
+      (error.message || "Unknown error");
+
+    message.classList.add("error");
+
+  }
+
+  button.disabled =
+    false;
+
+  button.textContent =
+    "📢 Publish Announcement";
+
+}
+
+
+/* =====================================================
+   LOAD ANNOUNCEMENTS
+===================================================== */
+
+async function loadAnnouncements(){
+
+  const container =
+    document.getElementById("announcementList");
+
+  container.innerHTML = `
+
+    <div class="info-box">
+      Loading announcements...
+    </div>
+
+  `;
+
+  const { data, error } =
+    await supabaseClient
+      .from("announcements")
+      .select("*")
+      .order(
+        "created_at",
+        {
+          ascending:false
+        }
+      );
+
+  if(error){
+
+    container.innerHTML = `
+
+      <div class="info-box">
+        Could not load announcements.
+        <br><br>
+        ${escapeHTML(error.message)}
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+  if(!data || data.length === 0){
+
+    container.innerHTML = `
+
+      <div class="info-box">
+        अभी कोई announcement नहीं है।
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+  container.innerHTML = "";
+
+  data.forEach(function(announcement){
+
+    const item =
+      document.createElement("div");
+
+    item.className =
+      "announcement-item";
+
+    const date =
+      announcement.created_at
+        ? new Date(
+            announcement.created_at
+          ).toLocaleDateString("en-IN")
+        : "";
+
+    item.innerHTML = `
+
+      <strong>
+        ${announcement.is_pinned ? "📌 " : "📢 "}
+        ${escapeHTML(announcement.title)}
+      </strong>
+
+      <p>
+        ${escapeHTML(announcement.message)}
+      </p>
+
+      <small>
+        ${announcement.is_active ? "🟢 Active" : "⚪ Inactive"}
+        •
+        ${escapeHTML(date)}
+      </small>
+
+      <div class="announcement-actions">
+
+        <button
+          class="small-btn pin-btn"
+          onclick="togglePinned(${announcement.id},${announcement.is_pinned})"
+        >
+          ${announcement.is_pinned ? "Unpin" : "📌 Pin"}
+        </button>
+
+        <button
+          class="small-btn active-btn"
+          onclick="toggleActive(${announcement.id},${announcement.is_active})"
+        >
+          ${announcement.is_active ? "Deactivate" : "Activate"}
+        </button>
+
+        <button
+          class="small-btn delete-btn"
+          onclick="deleteAnnouncement(${announcement.id})"
+        >
+          🗑️ Delete
+        </button>
+
+      </div>
+
+    `;
+
+    container.appendChild(item);
+
+  });
+
+}
+
+
+/* =====================================================
+   PIN / UNPIN
+===================================================== */
+
+async function togglePinned(id,currentValue){
+
+  const { error } =
+    await supabaseClient
+      .from("announcements")
+      .update({
+
+        is_pinned:!currentValue
+
+      })
+      .eq(
+        "id",
+        id
+      );
+
+  if(error){
+
+    alert(
+      "Could not update announcement: " +
+      error.message
+    );
+
+    return;
+
+  }
+
+  await loadAnnouncements();
+
+}
+
+
+/* =====================================================
+   ACTIVE / INACTIVE
+===================================================== */
+
+async function toggleActive(id,currentValue){
+
+  const { error } =
+    await supabaseClient
+      .from("announcements")
+      .update({
+
+        is_active:!currentValue
+
+      })
+      .eq(
+        "id",
+        id
+      );
+
+  if(error){
+
+    alert(
+      "Could not update announcement: " +
+      error.message
+    );
+
+    return;
+
+  }
+
+  await loadAnnouncements();
+
+}
+
+
+/* =====================================================
+   DELETE ANNOUNCEMENT
+===================================================== */
+
+async function deleteAnnouncement(id){
+
+  const confirmDelete =
+    confirm(
+      "Are you sure you want to delete this announcement?"
+    );
+
+  if(!confirmDelete){
+    return;
+  }
+
+  const { error } =
+    await supabaseClient
+      .from("announcements")
+      .delete()
+      .eq(
+        "id",
+        id
+      );
+
+  if(error){
+
+    alert(
+      "Could not delete announcement: " +
+      error.message
+    );
+
+    return;
+
+  }
+
+  await loadAnnouncements();
+
+}
+
+
+/* =====================================================
+   SAVE RESULT
+===================================================== */
+
+async function saveResult(){
+
+  const classValue =
+    document
+      .getElementById("resultClass")
+      .value;
+
+  const studentName =
+    document
+      .getElementById("studentName")
+      .value
+      .trim();
+
+  const rollNumber =
+    document
+      .getElementById("rollNumber")
+      .value
+      .trim();
+
+  const marks =
+    document
+      .getElementById("marks")
+      .value
+      .trim();
+
+  const percentage =
+    document
+      .getElementById("percentage")
+      .value
+      .trim();
+
+  const rank =
+    document
+      .getElementById("rank")
+      .value
+      .trim();
+
+  const message =
+    document
+      .getElementById("resultMessage");
+
+  const button =
+    document
+      .getElementById("resultButton");
+
+  message.className =
+    "message";
+
+  if(
+    classValue === "" ||
+    studentName === "" ||
+    rollNumber === "" ||
+    marks === "" ||
+    percentage === "" ||
+    rank === ""
+  ){
+
+    message.textContent =
+      "Please fill all result fields.";
+
+    message.classList.add("error");
+
+    return;
+
+  }
+
+  button.disabled =
+    true;
+
+  button.textContent =
+    "Saving...";
+
+  try{
+
+    const { error } =
+      await supabaseClient
+        .from("results")
+        .insert({
+
+          class:classValue,
+
+          student_name:studentName,
+
+          roll_number:rollNumber,
+
+          marks:marks,
+
+          percentage:percentage,
+
+          rank:rank,
+
+          is_active:true
+
+        });
+
+    if(error){
+      throw error;
+    }
+
+    message.textContent =
+      "✅ Result added successfully!";
+
+    message.classList.add("success");
+
+    document
+      .getElementById("resultClass")
+      .value = "";
+
+    document
+      .getElementById("studentName")
+      .value = "";
+
+    document
+      .getElementById("rollNumber")
+      .value = "";
+
+    document
+      .getElementById("marks")
+      .value = "";
+
+    document
+      .getElementById("percentage")
+      .value = "";
+
+    document
+      .getElementById("rank")
+      .value = "";
+
+    await loadResults();
+
+  }catch(error){
+
+    console.error(error);
+
+    message.textContent =
+      "Result save failed: " +
+      (error.message || "Unknown error");
+
+    message.classList.add("error");
+
+  }
+
+  button.disabled =
+    false;
+
+  button.textContent =
+    "🏆 Add Result";
+
+}
+
+
+/* =====================================================
+   LOAD RESULTS
+===================================================== */
+
+async function loadResults(){
+
+  const container =
+    document.getElementById("resultList");
+
+  container.innerHTML = `
+
+    <div class="info-box">
+      Loading results...
+    </div>
+
+  `;
+
+  const { data, error } =
+    await supabaseClient
+      .from("results")
+      .select("*")
+      .order(
+        "created_at",
+        {
+          ascending:false
+        }
+      );
+
+  if(error){
+
+    container.innerHTML = `
+
+      <div class="info-box">
+        Could not load results.
+        <br><br>
+        ${escapeHTML(error.message)}
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+  if(!data || data.length === 0){
+
+    container.innerHTML = `
+
+      <div class="info-box">
+        अभी कोई result add नहीं किया गया है।
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+  container.innerHTML = "";
+
+  data.forEach(function(result){
+
+    const item =
+      document.createElement("div");
+
+    item.className =
+      "result-item";
+
+    const date =
+      result.created_at
+        ? new Date(
+            result.created_at
+          ).toLocaleDateString("en-IN")
+        : "";
+
+    item.innerHTML = `
+
+      <strong>
+        🏆 ${escapeHTML(result.student_name)}
+      </strong>
+
+      <span>
+        Class ${escapeHTML(result.class)}
+        •
+        Roll No: ${escapeHTML(result.roll_number)}
+      </span>
+
+      <span>
+        Marks: ${escapeHTML(result.marks)}
+        •
+        Percentage: ${escapeHTML(result.percentage)}
+        •
+        Rank: ${escapeHTML(result.rank)}
+      </span>
+
+      <small>
+        ${result.is_active ? "🟢 Active" : "⚪ Inactive"}
+        •
+        Added: ${escapeHTML(date)}
+      </small>
+
+      <div class="result-actions">
+
+        <button
+          class="small-btn active-btn"
+          onclick="toggleResultActive(${result.id},${result.is_active})"
+        >
+          ${result.is_active ? "Deactivate" : "Activate"}
+        </button>
+
+        <button
+          class="small-btn delete-btn"
+          onclick="deleteResult(${result.id})"
+        >
+          🗑️ Delete
+        </button>
+
+      </div>
+
+    `;
+
+    container.appendChild(item);
+
+  });
+
+}
+
+
+/* =====================================================
+   RESULT ACTIVE / INACTIVE
+===================================================== */
+
+async function toggleResultActive(id,currentValue){
+
+  const { error } =
+    await supabaseClient
+      .from("results")
+      .update({
+
+        is_active:!currentValue
+
+      })
+      .eq(
+        "id",
+        id
+      );
+
+  if(error){
+
+    alert(
+      "Could not update result: " +
+      error.message
+    );
+
+    return;
+
+  }
+
+  await loadResults();
+
+}
+
+
+/* =====================================================
+   DELETE RESULT
+===================================================== */
+
+async function deleteResult(id){
+
+  const confirmDelete =
+    confirm(
+      "Are you sure you want to delete this result?"
+    );
+
+  if(!confirmDelete){
+    return;
+  }
+
+  const { error } =
+    await supabaseClient
+      .from("results")
+      .delete()
+      .eq(
+        "id",
+        id
+      );
+
+  if(error){
+
+    alert(
+      "Could not delete result: " +
+      error.message
+    );
+
+    return;
+
+  }
+
+  await loadResults();
+
+}
+
+
+/* =====================================================
+   SECURITY HELPER
+===================================================== */
+
+function escapeHTML(text){
+
+  return String(text)
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+
+}
+
+
+/* =====================================================
+   CHECK LOGIN SESSION
+===================================================== */
+
+async function checkSession(){
+
+  try{
+
+    const {
+      data,
+      error
+    } =
+      await supabaseClient
+        .auth
+        .getSession();
+
+    if(
+      !error &&
+      data &&
+      data.session &&
+      data.session.user
+    ){
+
+      showDashboard(
+        data.session.user
+      );
+
+    }
+
+  }catch(error){
+
+    console.error(
+      "Session check failed:",
+      error
+    );
+
+  }
+
+}
+
+
+/* =====================================================
+   AUTH STATE CHANGE
+===================================================== */
+
+supabaseClient
+  .auth
+  .onAuthStateChange(
+    function(event,session){
+
+      if(
+        session &&
+        session.user
+      ){
+
+        showDashboard(
+          session.user
+        );
+
+      }
+
+    }
+  );
+
+
+/* =====================================================
+   START
+===================================================== */
+
+checkSession();
+
+</script>
+
+</body>
+</html>

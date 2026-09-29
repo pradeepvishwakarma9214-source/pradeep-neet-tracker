@@ -1,776 +1,2488 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
 
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <meta
-    name="theme-color"
-    content="#6c5ce7"
-  >
+<title>DELIGHT MINDSET CLASSES</title>
 
-  <meta
-    name="description"
-    content="NEET study planner and backlog tracker"
-  >
+<meta
+  name="description"
+  content="DELIGHT MINDSET CLASSES - Study Material, Results, Teachers and Announcements"
+>
 
-  <link rel="manifest" href="./manifest.json">
+<!-- SUPABASE -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-  <title>NEET Planner & Tracker</title>
+<style>
 
-  <link rel="stylesheet" href="./style.css">
+/* =========================
+   BASIC
+========================= */
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  color:#172033;
+  background:#f7f9fc;
+  line-height:1.6;
+}
+
+.container{
+  width:min(1150px,92%);
+  margin:auto;
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+.site-header{
+  position:sticky;
+  top:0;
+  z-index:1000;
+  background:white;
+  border-bottom:1px solid #e5e7eb;
+  box-shadow:0 3px 15px rgba(0,0,0,.05);
+}
+
+.nav-wrap{
+  min-height:75px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  text-decoration:none;
+  color:#172033;
+}
+
+.brand-mark{
+  width:48px;
+  height:48px;
+  border-radius:13px;
+  display:grid;
+  place-items:center;
+  background:linear-gradient(135deg,#3548d4,#7258e8);
+  color:white;
+  font-weight:800;
+  font-size:16px;
+}
+
+.brand strong{
+  display:block;
+  font-size:17px;
+}
+
+.brand small{
+  display:block;
+  color:#667085;
+  font-size:11px;
+}
+
+nav{
+  display:flex;
+  align-items:center;
+  gap:17px;
+}
+
+nav a{
+  text-decoration:none;
+  color:#344054;
+  font-size:14px;
+  font-weight:600;
+}
+
+nav a:hover{
+  color:#4355d8;
+}
+
+.menu-btn{
+  display:none;
+  border:0;
+  background:none;
+  font-size:28px;
+  cursor:pointer;
+}
+
+
+/* =========================
+   HERO
+========================= */
+
+.hero{
+  background:linear-gradient(135deg,#eef2ff,#ffffff);
+  padding:90px 0;
+}
+
+.hero-grid{
+  display:grid;
+  grid-template-columns:1.25fr .75fr;
+  gap:55px;
+  align-items:center;
+}
+
+.eyebrow{
+  display:inline-block;
+  color:#4355d8;
+  font-weight:800;
+  font-size:12px;
+  letter-spacing:1px;
+}
+
+.hero h1{
+  font-size:52px;
+  line-height:1.08;
+  margin:18px 0;
+}
+
+.hero h1 span{
+  color:#4355d8;
+}
+
+.hero-text{
+  color:#667085;
+  font-size:18px;
+  max-width:650px;
+}
+
+.hero-actions{
+  display:flex;
+  gap:12px;
+  margin-top:28px;
+}
+
+.btn{
+  display:inline-block;
+  padding:12px 18px;
+  border-radius:10px;
+  border:none;
+  cursor:pointer;
+  text-decoration:none;
+  font-weight:700;
+}
+
+.primary{
+  background:#4355d8;
+  color:white;
+}
+
+.secondary{
+  background:white;
+  color:#344054;
+  border:1px solid #d9dee8;
+}
+
+.small{
+  padding:9px 14px;
+  font-size:13px;
+}
+
+.hero-card{
+  background:white;
+  border:1px solid #e1e6ef;
+  border-radius:24px;
+  padding:45px 30px;
+  text-align:center;
+  box-shadow:0 18px 45px rgba(30,45,80,.10);
+}
+
+.hero-icon{
+  width:130px;
+  height:130px;
+  margin:auto;
+  border-radius:30px;
+  display:grid;
+  place-items:center;
+  background:linear-gradient(135deg,#4355d8,#7659e8);
+  color:white;
+  font-size:38px;
+  font-weight:900;
+}
+
+.hero-card h3{
+  margin-top:20px;
+}
+
+.hero-card p{
+  color:#667085;
+  margin-top:8px;
+}
+
+
+/* =========================
+   SECTIONS
+========================= */
+
+.section{
+  padding:70px 0;
+  background:white;
+}
+
+.section.alt{
+  background:#f3f6fa;
+}
+
+.section-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:end;
+  margin-bottom:28px;
+}
+
+.section-head h2,
+.narrow h2{
+  font-size:32px;
+  margin-top:4px;
+}
+
+.text-link{
+  color:#4355d8;
+  text-decoration:none;
+  font-weight:700;
+}
+
+
+/* =========================
+   ANNOUNCEMENTS
+========================= */
+
+.cards{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:18px;
+}
+
+.announcement-card{
+  background:white;
+  border:1px solid #e1e6ef;
+  border-radius:15px;
+  padding:22px;
+}
+
+.announcement-card h3{
+  margin-bottom:7px;
+}
+
+.announcement-card p{
+  color:#667085;
+}
+
+.pin{
+  display:inline-block;
+  background:#e9edff;
+  color:#4355d8;
+  padding:4px 9px;
+  border-radius:20px;
+  font-size:11px;
+  font-weight:700;
+  margin-bottom:8px;
+}
+
+.announcement-date{
+  display:block;
+  color:#98a2b3;
+  font-size:12px;
+  margin-top:12px;
+}
+
+
+/* =========================
+   STUDY MATERIAL
+========================= */
+
+.material-selector{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:15px;
+  margin-top:20px;
+}
+
+.material-selector select{
+  width:100%;
+  padding:14px;
+  border:1px solid #d9dee8;
+  border-radius:10px;
+  background:white;
+  color:#172033;
+  font-size:15px;
+  cursor:pointer;
+  outline:none;
+}
+
+.material-selector select:focus{
+  border-color:#4355d8;
+  box-shadow:0 0 0 3px rgba(67,85,216,.10);
+}
+
+.material-selector select:disabled{
+  background:#f2f4f7;
+  color:#98a2b3;
+  cursor:not-allowed;
+}
+
+.material-result{
+  margin-top:25px;
+}
+
+.material-result-card{
+  background:white;
+  border:1px solid #e0e5ed;
+  border-radius:16px;
+  padding:25px;
+  box-shadow:0 8px 25px rgba(30,45,80,.06);
+}
+
+.material-result-card h3{
+  margin-bottom:5px;
+  font-size:21px;
+}
+
+.material-result-card .material-info{
+  color:#667085;
+  margin-bottom:18px;
+}
+
+.material-empty{
+  padding:18px;
+  border-radius:12px;
+  background:#f8fafc;
+  border:1px dashed #d0d5dd;
+  color:#667085;
+}
+
+.material-list{
+  display:grid;
+  gap:12px;
+}
+
+.material-item{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+  padding:15px;
+  border:1px solid #e4e7ec;
+  border-radius:12px;
+  background:white;
+}
+
+.material-item-info strong{
+  display:block;
+  margin-bottom:3px;
+}
+
+.material-item-info span{
+  color:#667085;
+  font-size:13px;
+}
+
+.material-download{
+  flex-shrink:0;
+  background:#4355d8;
+  color:white;
+  text-decoration:none;
+  padding:8px 13px;
+  border-radius:8px;
+  font-size:13px;
+  font-weight:700;
+}
+
+
+/* =========================
+   RESULTS
+========================= */
+
+.result-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:20px;
+}
+
+.result-card{
+  display:flex;
+  gap:20px;
+  align-items:center;
+  background:white;
+  border:1px solid #e1e6ef;
+  border-radius:16px;
+  padding:25px;
+}
+
+.result-number{
+  width:70px;
+  height:70px;
+  border-radius:18px;
+  display:grid;
+  place-items:center;
+  background:#e9edff;
+  color:#4355d8;
+  font-size:27px;
+  font-weight:900;
+  flex-shrink:0;
+}
+
+.result-card p{
+  color:#667085;
+  margin:5px 0 14px;
+}
+
+
+/* =========================
+   RESULT LIST
+========================= */
+
+.student-result-list{
+  margin-top:25px;
+  display:grid;
+  gap:12px;
+}
+
+.student-result-item{
+  background:white;
+  border:1px solid #e1e6ef;
+  border-radius:12px;
+  padding:17px;
+}
+
+.student-result-item strong{
+  display:block;
+  font-size:17px;
+  margin-bottom:5px;
+}
+
+.student-result-item span{
+  color:#667085;
+  font-size:14px;
+  display:block;
+  margin-top:3px;
+}
+
+.result-loading{
+  text-align:center;
+  padding:20px;
+  color:#667085;
+}
+
+
+/* =========================
+   TEACHERS
+========================= */
+
+.teacher-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+  gap:18px;
+}
+
+.teacher-card{
+  background:white;
+  border:1px solid #e0e5ed;
+  border-radius:16px;
+  padding:24px;
+  text-align:center;
+}
+
+.teacher-avatar{
+  width:70px;
+  height:70px;
+  margin:auto;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  background:#e9edff;
+  color:#4355d8;
+  font-size:22px;
+  font-weight:800;
+}
+
+.teacher-card h3{
+  margin-top:13px;
+}
+
+.teacher-card p{
+  color:#667085;
+}
+
+
+/* =========================
+   ABOUT
+========================= */
+
+.narrow{
+  max-width:850px;
+}
+
+.large{
+  color:#667085;
+  font-size:18px;
+  margin-top:15px;
+}
+
+.about-info{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:15px;
+  margin-top:25px;
+}
+
+.info-box{
+  background:#f5f7fa;
+  border-radius:12px;
+  padding:18px;
+}
+
+.info-box strong{
+  display:block;
+  margin-bottom:5px;
+}
+
+.info-box span{
+  color:#667085;
+}
+
+
+/* =========================
+   CONTACT
+========================= */
+
+.contact-section{
+  background:#f3f6fa;
+}
+
+.contact-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:35px;
+  align-items:center;
+}
+
+.contact-card{
+  background:white;
+  border:1px solid #e0e5ed;
+  border-radius:16px;
+  padding:25px;
+}
+
+.contact-card p{
+  margin:13px 0;
+}
+
+.contact-card a{
+  color:#4355d8;
+  font-weight:700;
+  text-decoration:none;
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+footer{
+  background:#101828;
+  color:white;
+  padding:32px 0;
+}
+
+.footer-wrap{
+  display:flex;
+  justify-content:space-between;
+  gap:20px;
+}
+
+.footer-wrap span{
+  color:#b7c0cc;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:850px){
+
+  .menu-btn{
+    display:block;
+  }
+
+  nav{
+    display:none;
+    position:absolute;
+    left:0;
+    right:0;
+    top:75px;
+    background:white;
+    padding:20px 6%;
+    flex-direction:column;
+    align-items:flex-start;
+    border-bottom:1px solid #ddd;
+  }
+
+  nav.show{
+    display:flex;
+  }
+
+  .hero-grid{
+    grid-template-columns:1fr;
+  }
+
+  .hero h1{
+    font-size:40px;
+  }
+
+  .result-grid,
+  .contact-grid{
+    grid-template-columns:1fr;
+  }
+
+  .material-selector{
+    grid-template-columns:1fr;
+  }
+
+}
+
+
+@media(max-width:550px){
+
+  .brand strong{
+    font-size:13px;
+  }
+
+  .brand small{
+    font-size:9px;
+  }
+
+  .hero{
+    padding:60px 0;
+  }
+
+  .hero h1{
+    font-size:34px;
+  }
+
+  .hero-text{
+    font-size:16px;
+  }
+
+  .hero-actions{
+    flex-direction:column;
+  }
+
+  .hero-actions .btn{
+    text-align:center;
+  }
+
+  .section{
+    padding:50px 0;
+  }
+
+  .section-head h2,
+  .narrow h2{
+    font-size:27px;
+  }
+
+  .about-info{
+    grid-template-columns:1fr;
+  }
+
+  .footer-wrap{
+    flex-direction:column;
+  }
+
+  .material-item{
+    flex-direction:column;
+    align-items:flex-start;
+  }
+
+}
+
+
+/* =========================
+   NO MATERIAL MESSAGE
+========================= */
+
+.no-material{
+  text-align:center;
+  padding:30px 20px;
+}
+
+.no-material-icon{
+  font-size:40px;
+  margin-bottom:10px;
+}
+
+.no-material h3{
+  margin-bottom:6px;
+}
+
+.no-material p{
+  color:#667085;
+}
+
+
+/* =========================
+   LOADING
+========================= */
+
+.loading{
+  text-align:center;
+  padding:20px;
+  color:#667085;
+}
+
+</style>
+
 </head>
+
 
 <body>
 
-  <!-- ================= HEADER ================= -->
 
-  <header class="top-header">
-    <div class="header-inner">
+<!-- =========================
+     HEADER
+========================= -->
 
-      <div class="brand">
-        <div class="brand-icon">🎯</div>
+<header class="site-header">
 
-        <div>
-          <h1>NEET Planner</h1>
-          <p>Study Planner & Backlog Tracker</p>
-        </div>
-      </div>
+  <div class="container nav-wrap">
 
-      <!-- INSTALL APP BUTTON -->
-      <button
-        id="installAppBtn"
-        class="install-app-btn"
-        type="button"
-        style="display:none;"
-      >
-        📱 Install App
-      </button>
+    <a class="brand" href="#home">
 
-    </div>
-  </header>
+      <span class="brand-mark">
+        DMC
+      </span>
 
+      <span>
 
-  <!-- ================= ONBOARDING ================= -->
+        <strong>
+          DELIGHT MINDSET CLASSES
+        </strong>
 
-  <section id="onboarding" class="onboarding-section">
+        <small>
+          Learn • Practice • Improve • Succeed
+        </small>
 
-    <div class="onboarding-card">
+      </span>
 
-      <div class="progress-header">
-        <div>
-          <span id="stepLabel">Step 1 of 10</span>
-        </div>
-
-        <div>
-          <span id="stepPercent">10%</span>
-        </div>
-      </div>
-
-      <div class="progress-track">
-        <div
-          id="onboardingProgress"
-          class="progress-fill"
-          style="width:10%;"
-        ></div>
-      </div>
+    </a>
 
 
-      <div id="onboardingContent">
-        <!-- JavaScript will render onboarding steps here -->
-      </div>
+    <button
+      class="menu-btn"
+      onclick="toggleMenu()"
+      aria-label="Open Menu"
+    >
+      ☰
+    </button>
 
 
-      <div class="onboarding-actions">
+    <nav id="nav">
 
-        <button
-          id="backStepBtn"
-          class="secondary-btn"
-          type="button"
-        >
-          ← Back
-        </button>
+      <a href="#home">
+        Home
+      </a>
 
-        <button
-          id="nextStepBtn"
-          class="primary-btn"
-          type="button"
-        >
-          Next →
-        </button>
+      <a href="#material">
+        Study Material
+      </a>
 
-      </div>
+      <a href="#announcements">
+        Announcements
+      </a>
 
-    </div>
+      <a href="#results">
+        Results
+      </a>
 
-  </section>
+      <a href="#teachers">
+        Teachers
+      </a>
 
+      <a href="#about">
+        About
+      </a>
 
-  <!-- ================= MAIN APP ================= -->
-
-  <main
-    id="app"
-    class="main-app"
-    style="display:none;"
-  >
-
-    <!-- ================= APP NAVIGATION ================= -->
-
-    <nav class="app-nav">
-
-      <button
-        class="nav-btn active"
-        data-page="dashboardPage"
-        type="button"
-      >
-        🏠 Dashboard
-      </button>
-
-      <button
-        class="nav-btn"
-        data-page="chaptersPage"
-        type="button"
-      >
-        📚 Chapters
-      </button>
-
-      <button
-        class="nav-btn"
-        data-page="plannerPage"
-        type="button"
-      >
-        🗓️ Planner
-      </button>
-
-      <button
-        class="nav-btn"
-        data-page="settingsPage"
-        type="button"
-      >
-        ⚙️ Settings
-      </button>
+      <a href="#contact">
+        Contact
+      </a>
 
     </nav>
 
+  </div>
 
-    <!-- ================= DASHBOARD ================= -->
+</header>
 
-    <section
-      id="dashboardPage"
-      class="page active-page"
+
+
+<!-- =========================
+     MAIN
+========================= -->
+
+<main id="home">
+
+
+<!-- =========================
+     HERO
+========================= -->
+
+<section class="hero">
+
+  <div class="container hero-grid">
+
+
+    <div>
+
+      <span class="eyebrow">
+        WELCOME TO
+      </span>
+
+
+      <h1>
+        DELIGHT MINDSET
+        <span>CLASSES</span>
+      </h1>
+
+
+      <p class="hero-text">
+        A place for organised study material,
+        practice resources, important announcements
+        and student achievements.
+      </p>
+
+
+      <div class="hero-actions">
+
+        <a
+          class="btn primary"
+          href="#material"
+        >
+          📚 Study Material
+        </a>
+
+
+        <a
+          class="btn secondary"
+          href="#results"
+        >
+          🏆 View Results
+        </a>
+
+      </div>
+
+    </div>
+
+
+
+    <div class="hero-card">
+
+      <div class="hero-icon">
+        DMC
+      </div>
+
+
+      <h3>
+        Learn • Practice • Improve • Succeed
+      </h3>
+
+
+      <p>
+        Study resources for Class 9 to Class 12 students.
+      </p>
+
+    </div>
+
+
+  </div>
+
+</section>
+
+
+
+<!-- =========================
+     ANNOUNCEMENTS
+========================= -->
+
+<section
+  class="section"
+  id="announcements"
+>
+
+  <div class="container">
+
+
+    <div class="section-head">
+
+      <div>
+
+        <span class="eyebrow">
+          LATEST UPDATES
+        </span>
+
+        <h2>
+          Announcements
+        </h2>
+
+      </div>
+
+    </div>
+
+
+    <div
+      class="cards"
+      id="announcementsContainer"
     >
 
-      <div class="page-header">
+      <div class="announcement-card">
 
-        <div>
-          <h2>Today's Dashboard</h2>
-          <p id="dashboardDate"></p>
+        <div class="loading">
+          ⏳ Loading announcements...
         </div>
 
-        <div class="dashboard-actions">
+      </div>
+
+    </div>
+
+
+  </div>
+
+</section>
+
+
+
+<!-- =========================
+     STUDY MATERIAL
+========================= -->
+
+<section
+  class="section alt"
+  id="material"
+>
+
+  <div class="container">
+
+
+    <div class="section-head">
+
+      <div>
+
+        <span class="eyebrow">
+          LEARN & PRACTICE
+        </span>
+
+        <h2>
+          Study Material
+        </h2>
+
+      </div>
+
+    </div>
+
+
+    <p style="color:#667085;margin-bottom:25px;">
+      Select your class, subject and material type.
+    </p>
+
+
+
+    <div class="material-selector">
+
+
+      <select
+        id="classSelect"
+        onchange="loadSubjects()"
+      >
+
+        <option value="">
+          Select Class
+        </option>
+
+        <option value="9">
+          Class 9
+        </option>
+
+        <option value="10">
+          Class 10
+        </option>
+
+        <option value="11">
+          Class 11
+        </option>
+
+        <option value="12">
+          Class 12
+        </option>
+
+      </select>
+
+
+
+      <select
+        id="subjectSelect"
+        onchange="loadMaterialTypes()"
+        disabled
+      >
+
+        <option value="">
+          Select Subject
+        </option>
+
+      </select>
+
+
+
+      <select
+        id="materialSelect"
+        onchange="showMaterials()"
+        disabled
+      >
+
+        <option value="">
+          Select Material Type
+        </option>
+
+      </select>
+
+
+    </div>
+
+
+
+    <div
+      id="materialResult"
+      class="material-result"
+    ></div>
+
+
+  </div>
+
+</section>
+
+
+
+<!-- =========================
+     RESULTS
+========================= -->
+
+<section
+  class="section"
+  id="results"
+>
+
+  <div class="container">
+
+
+    <div class="section-head">
+
+      <div>
+
+        <span class="eyebrow">
+          STUDENT ACHIEVEMENTS
+        </span>
+
+        <h2>
+          Results
+        </h2>
+
+      </div>
+
+    </div>
+
+
+
+    <div class="result-grid">
+
+
+      <article class="result-card">
+
+        <div class="result-number">
+          10
+        </div>
+
+
+        <div>
+
+          <h3>
+            Class 10th Results
+          </h3>
+
+
+          <p>
+            Class 10th students' results
+            can be viewed here.
+          </p>
+
 
           <button
-            id="installAppBtnDashboard"
-            class="install-app-btn dashboard-install-btn"
-            type="button"
-            style="display:none;"
+            class="btn small secondary"
+            onclick="loadResults('10')"
           >
-            📱 Install App
+            View Results
           </button>
 
         </div>
 
-      </div>
+      </article>
 
 
-      <!-- CURRENT CLASSES -->
 
-      <div class="dashboard-section">
+      <article class="result-card">
 
-        <div class="section-title">
-          <h3>🎓 Today's Current Classes</h3>
+        <div class="result-number">
+          12
         </div>
 
-        <div
-          id="todayClasses"
-          class="task-list"
-        ></div>
-
-      </div>
-
-
-      <!-- TODAY'S PROGRESS -->
-
-      <div class="dashboard-section">
-
-        <div class="section-title">
-          <h3>📊 Today's Progress</h3>
-        </div>
-
-        <div class="progress-card">
-
-          <div class="progress-card-header">
-
-            <div>
-              <span id="todayProgressText">
-                0/0
-              </span>
-
-              <p>Tasks completed</p>
-            </div>
-
-            <strong id="todayProgressPercent">
-              0%
-            </strong>
-
-          </div>
-
-          <div class="progress-track">
-
-            <div
-              id="todayProgressBar"
-              class="progress-fill"
-              style="width:0%;"
-            ></div>
-
-          </div>
-
-        </div>
-
-      </div>
-
-
-      <!-- STUDY TIME -->
-
-      <div class="dashboard-section">
-
-        <div class="study-time-card">
-
-          <div class="study-time-header">
-
-            <div class="study-time-title">
-
-              <div class="study-time-icon">
-                ⏱️
-              </div>
-
-              <div>
-                <h3>Study Time</h3>
-                <p>Today's planned study time</p>
-              </div>
-
-            </div>
-
-            <div
-              id="studyTimeProgressPercent"
-              class="study-time-percent"
-            >
-              0%
-            </div>
-
-          </div>
-
-
-          <div class="study-time-stats">
-
-            <div class="study-time-stat">
-              <span>Planned</span>
-              <strong id="studyTimePlanned">
-                0m
-              </strong>
-            </div>
-
-            <div class="study-time-stat">
-              <span>Completed</span>
-              <strong id="studyTimeCompleted">
-                0m
-              </strong>
-            </div>
-
-            <div class="study-time-stat">
-              <span>Remaining</span>
-              <strong id="studyTimeRemaining">
-                0m
-              </strong>
-            </div>
-
-          </div>
-
-
-          <div class="study-time-progress">
-
-            <div class="progress-track">
-
-              <div
-                id="studyTimeProgressBar"
-                class="progress-fill"
-                style="width:0%;"
-              ></div>
-
-            </div>
-
-          </div>
-
-        </div>
-
-      </div>
-
-
-      <!-- TODAY'S TASKS -->
-
-      <div class="dashboard-section">
-
-        <div class="section-title">
-          <h3>✅ Today's Tasks</h3>
-        </div>
-
-        <div
-          id="todayTasks"
-          class="task-list"
-        ></div>
-
-      </div>
-
-
-      <!-- PENDING WORK -->
-
-      <div class="dashboard-section">
-
-        <div class="section-title">
-          <h3>⏳ Pending Work</h3>
-        </div>
-
-        <div
-          id="pendingTasks"
-          class="task-list"
-        ></div>
-
-      </div>
-
-
-      <!-- OVERALL PROGRESS -->
-
-      <div class="dashboard-section">
-
-        <div class="section-title">
-          <h3>📈 Overall Progress</h3>
-        </div>
-
-        <div
-          id="overallProgress"
-          class="overall-progress"
-        ></div>
-
-      </div>
-
-    </section>
-
-
-    <!-- ================= CHAPTERS PAGE ================= -->
-
-    <section
-      id="chaptersPage"
-      class="page"
-    >
-
-      <div class="page-header">
 
         <div>
-          <h2>📚 Chapters</h2>
-          <p>Track your lecture-wise progress</p>
+
+          <h3>
+            Class 12th Results
+          </h3>
+
+
+          <p>
+            Class 12th students' results
+            can be viewed here.
+          </p>
+
+
+          <button
+            class="btn small secondary"
+            onclick="loadResults('12')"
+          >
+            View Results
+          </button>
+
         </div>
+
+      </article>
+
+
+    </div>
+
+
+    <div
+      id="resultsContainer"
+      class="student-result-list"
+    ></div>
+
+
+  </div>
+
+</section>
+
+
+
+<!-- =========================
+     TEACHERS
+========================= -->
+
+<section
+  class="section alt"
+  id="teachers"
+>
+
+  <div class="container">
+
+
+    <div class="section-head">
+
+      <div>
+
+        <span class="eyebrow">
+          OUR FACULTY
+        </span>
+
+        <h2>
+          Our Teachers
+        </h2>
 
       </div>
 
-
-      <div
-        id="chaptersContainer"
-        class="chapters-container"
-      ></div>
-
-    </section>
+    </div>
 
 
-    <!-- ================= PLANNER PAGE ================= -->
 
-    <section
-      id="plannerPage"
-      class="page"
-    >
+    <div class="teacher-grid">
 
-      <div class="page-header">
 
-        <div>
-          <h2>🗓️ Study Planner</h2>
-          <p>Your complete backlog plan</p>
+      <div class="teacher-card">
+
+        <div class="teacher-avatar">
+          AS
         </div>
 
-      </div>
-
-
-      <div
-        id="plannerContainer"
-        class="planner-container"
-      ></div>
-
-    </section>
-
-
-    <!-- ================= SETTINGS PAGE ================= -->
-
-    <section
-      id="settingsPage"
-      class="page"
-    >
-
-      <div class="page-header">
-
-        <div>
-          <h2>⚙️ Settings</h2>
-          <p>Customize your study planner</p>
-        </div>
-
-      </div>
-
-
-      <div class="settings-card">
-
-        <div class="settings-group">
-
-          <label for="lectureMinutes">
-            Lecture duration
-          </label>
-
-          <input
-            id="lectureMinutes"
-            type="number"
-            min="1"
-          >
-
-          <small>
-            Default: 105 minutes
-          </small>
-
-        </div>
-
-
-        <div class="settings-group">
-
-          <label for="notesMinutes">
-            Notes time per lecture
-          </label>
-
-          <input
-            id="notesMinutes"
-            type="number"
-            min="0"
-          >
-
-        </div>
-
-
-        <div class="settings-group">
-
-          <label for="dppMinutes">
-            DPP time per lecture
-          </label>
-
-          <input
-            id="dppMinutes"
-            type="number"
-            min="0"
-          >
-
-        </div>
-
-
-        <div class="settings-group">
-
-          <label for="questionMinutes">
-            Question practice time
-          </label>
-
-          <input
-            id="questionMinutes"
-            type="number"
-            min="0"
-          >
-
-        </div>
-
-
-        <div class="settings-group">
-
-          <label for="revisionMinutes">
-            Revision time
-          </label>
-
-          <input
-            id="revisionMinutes"
-            type="number"
-            min="0"
-          >
-
-        </div>
-
-
-        <div class="settings-group">
-
-          <label for="dailyHours">
-            Daily available study hours
-          </label>
-
-          <input
-            id="dailyHours"
-            type="number"
-            min="1"
-            step="0.5"
-          >
-
-        </div>
-
-
-        <button
-          id="saveSettingsBtn"
-          class="primary-btn"
-          type="button"
-        >
-          💾 Save Settings
-        </button>
-
-      </div>
-
-
-      <!-- INSTALL APP -->
-
-      <div class="settings-card install-card">
-
-        <div class="section-title">
-
-          <h3>📱 NEET Planner App</h3>
-
-        </div>
+        <h3>
+          Ajay Sir
+        </h3>
 
         <p>
-          Install NEET Planner on your device for an
-          app-like experience.
-        </p>
-
-        <button
-          id="installAppBtnSettings"
-          class="primary-btn"
-          type="button"
-          style="display:none;"
-        >
-          📱 Install NEET Planner App
-        </button>
-
-        <p
-          id="installHelpText"
-          class="install-help-text"
-          style="display:none;"
-        >
-          Your browser does not currently offer the
-          app installation option.
+          Math
         </p>
 
       </div>
 
-    </section>
-
-  </main>
 
 
-  <!-- ================= JAVASCRIPT ================= -->
+      <div class="teacher-card">
 
-  <script src="./script.js"></script>
+        <div class="teacher-avatar">
+          US
+        </div>
+
+        <h3>
+          Utkarsh Sir
+        </h3>
+
+        <p>
+          Physics, Math
+        </p>
+
+      </div>
 
 
-  <!-- ================= PWA INSTALL + SERVICE WORKER ================= -->
 
-  <script>
+      <div class="teacher-card">
 
-    let deferredInstallPrompt = null;
+        <div class="teacher-avatar">
+          SS
+        </div>
+
+        <h3>
+          Sujit Sir
+        </h3>
+
+        <p>
+          Science
+        </p>
+
+      </div>
 
 
-    /*
-      Capture browser's PWA install prompt.
-    */
 
-    window.addEventListener(
-      "beforeinstallprompt",
-      (event) => {
+      <div class="teacher-card">
 
-        event.preventDefault();
+        <div class="teacher-avatar">
+          NS
+        </div>
 
-        deferredInstallPrompt = event;
+        <h3>
+          Neeraj Sir
+        </h3>
 
-        showInstallButtons();
+        <p>
+          English
+        </p>
 
-      }
+      </div>
+
+
+
+      <div class="teacher-card">
+
+        <div class="teacher-avatar">
+          AS
+        </div>
+
+        <h3>
+          Abhishek Sir
+        </h3>
+
+        <p>
+          English
+        </p>
+
+      </div>
+
+
+
+      <div class="teacher-card">
+
+        <div class="teacher-avatar">
+          CM
+        </div>
+
+        <h3>
+          Chandani Ma'am
+        </h3>
+
+        <p>
+          Science
+        </p>
+
+      </div>
+
+
+
+      <div class="teacher-card">
+
+        <div class="teacher-avatar">
+          AM
+        </div>
+
+        <h3>
+          Akanksha Ma'am
+        </h3>
+
+        <p>
+          Math
+        </p>
+
+      </div>
+
+
+    </div>
+
+  </div>
+
+</section>
+
+
+
+<!-- =========================
+     ABOUT
+========================= -->
+
+<section
+  class="section"
+  id="about"
+>
+
+  <div class="container narrow">
+
+
+    <span class="eyebrow">
+      ABOUT US
+    </span>
+
+
+    <h2>
+      DELIGHT MINDSET CLASSES
+    </h2>
+
+
+    <p class="large">
+
+      DELIGHT MINDSET CLASSES was established in 2022.
+      We aim to provide students with organised academic
+      resources, practice material, important updates and
+      support for their academic journey.
+
+    </p>
+
+
+
+    <div class="about-info">
+
+
+      <div class="info-box">
+
+        <strong>
+          🏫 Established
+        </strong>
+
+        <span>
+          2022
+        </span>
+
+      </div>
+
+
+
+      <div class="info-box">
+
+        <strong>
+          📍 Location
+        </strong>
+
+        <span>
+          Asnaw Bajar, Bhadohi
+        </span>
+
+      </div>
+
+
+
+      <div class="info-box">
+
+        <strong>
+          📚 Classes
+        </strong>
+
+        <span>
+          Class 9 to Class 12
+        </span>
+
+      </div>
+
+
+    </div>
+
+  </div>
+
+</section>
+
+
+
+<!-- =========================
+     CONTACT
+========================= -->
+
+<section
+  class="section contact-section"
+  id="contact"
+>
+
+  <div class="container contact-grid">
+
+
+    <div>
+
+      <span class="eyebrow">
+        GET IN TOUCH
+      </span>
+
+
+      <h2>
+        Contact Us
+      </h2>
+
+
+      <p class="large">
+
+        For coaching related information,
+        contact DELIGHT MINDSET CLASSES.
+
+      </p>
+
+    </div>
+
+
+
+    <div class="contact-card">
+
+
+      <p>
+
+        📍 <strong>Address:</strong><br>
+
+        Asnaw Bajar, Bhadohi
+
+      </p>
+
+
+
+      <p>
+
+        📞 <strong>Mobile:</strong><br>
+
+        <a href="tel:9119873468">
+          9119873468
+        </a>
+
+      </p>
+
+
+
+      <p>
+
+        📅 <strong>Established:</strong><br>
+
+        2022
+
+      </p>
+
+
+    </div>
+
+
+  </div>
+
+</section>
+
+
+</main>
+
+
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer>
+
+  <div class="container footer-wrap">
+
+    <strong>
+      DELIGHT MINDSET CLASSES
+    </strong>
+
+    <span>
+      Learn • Practice • Improve • Succeed
+    </span>
+
+  </div>
+
+</footer>
+
+
+
+<!-- =========================
+     JAVASCRIPT
+========================= -->
+
+<script>
+
+/* =========================
+   SUPABASE CONNECTION
+========================= */
+
+const SUPABASE_URL =
+  "https://sbckafdncwclnchvzubl.supabase.co";
+
+const SUPABASE_PUBLISHABLE_KEY =
+  "sb_publishable_Yvlr5Wdv8X4ViOgPyD3MFA_6NnRl9z6";
+
+const supabaseClient =
+  window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+  );
+
+
+/* =========================
+   MOBILE MENU
+========================= */
+
+function toggleMenu(){
+
+  document
+    .getElementById("nav")
+    .classList
+    .toggle("show");
+
+}
+
+
+document
+  .querySelectorAll("nav a")
+  .forEach(function(link){
+
+    link.addEventListener("click",function(){
+
+      document
+        .getElementById("nav")
+        .classList
+        .remove("show");
+
+    });
+
+  });
+
+
+/* =========================
+   LOAD ANNOUNCEMENTS
+========================= */
+
+async function loadAnnouncements(){
+
+  const container =
+    document.getElementById(
+      "announcementsContainer"
     );
 
 
-    /*
-      Show all install buttons.
-    */
+  container.innerHTML = `
 
-    function showInstallButtons() {
+    <div class="announcement-card">
 
-      const buttons = [
+      <div class="loading">
+        ⏳ Loading announcements...
+      </div>
 
-        document.getElementById("installAppBtn"),
+    </div>
 
-        document.getElementById("installAppBtnDashboard"),
+  `;
 
-        document.getElementById("installAppBtnSettings")
 
-      ];
+  try{
 
-      buttons.forEach((button) => {
+    const { data, error } =
+      await supabaseClient
+        .from("announcements")
+        .select("*")
+        .eq("is_active", true)
+        .order("is_pinned", {
+          ascending:false
+        })
+        .order("created_at", {
+          ascending:false
+        });
 
-        if (button) {
 
-          button.style.display = "inline-flex";
+    if(error){
 
-          button.onclick = installNEETPlanner;
+      console.error(
+        "Supabase announcement error:",
+        error
+      );
+
+
+      container.innerHTML = `
+
+        <div class="announcement-card">
+
+          <h3>
+            ⚠️ Announcements load नहीं हो पाए
+          </h3>
+
+          <p>
+            कृपया थोड़ी देर बाद फिर try करें.
+          </p>
+
+        </div>
+
+      `;
+
+      return;
+
+    }
+
+
+    if(!data || data.length === 0){
+
+      container.innerHTML = `
+
+        <div class="announcement-card">
+
+          <h3>
+            📢 No Announcements
+          </h3>
+
+          <p>
+            अभी कोई नया announcement available नहीं है.
+          </p>
+
+        </div>
+
+      `;
+
+      return;
+
+    }
+
+
+    container.innerHTML =
+      data
+        .map(function(announcement){
+
+          const createdDate =
+            announcement.created_at
+              ? new Date(
+                  announcement.created_at
+                ).toLocaleDateString(
+                  "en-IN",
+                  {
+                    day:"2-digit",
+                    month:"short",
+                    year:"numeric"
+                  }
+                )
+              : "";
+
+
+          return `
+
+            <div class="announcement-card">
+
+              ${
+                announcement.is_pinned
+
+                ?
+
+                `
+                <span class="pin">
+                  📌 IMPORTANT
+                </span>
+                `
+
+                :
+
+                ""
+              }
+
+
+              <h3>
+                ${escapeHTML(
+                  announcement.title ||
+                  "Announcement"
+                )}
+              </h3>
+
+
+              <p>
+                ${escapeHTML(
+                  announcement.message ||
+                  ""
+                ).replace(/\n/g,"<br>")}
+              </p>
+
+
+              ${
+                createdDate
+
+                ?
+
+                `
+                <span class="announcement-date">
+                  📅 ${createdDate}
+                </span>
+                `
+
+                :
+
+                ""
+              }
+
+            </div>
+
+          `;
+
+        })
+        .join("");
+
+
+  }catch(error){
+
+    console.error(
+      "Unexpected announcement error:",
+      error
+    );
+
+
+    container.innerHTML = `
+
+      <div class="announcement-card">
+
+        <h3>
+          ⚠️ Something went wrong
+        </h3>
+
+        <p>
+          कृपया page refresh करके फिर try करें.
+        </p>
+
+      </div>
+
+    `;
+
+  }
+
+}
+
+
+/* =========================
+   SUBJECT DATA
+========================= */
+
+const subjects = {
+
+  "9":[
+    "Maths",
+    "Science",
+    "English"
+  ],
+
+  "10":[
+    "Maths",
+    "Science",
+    "English"
+  ],
+
+  "11":[
+    "Physics",
+    "Chemistry",
+    "Maths",
+    "Biology",
+    "English"
+  ],
+
+  "12":[
+    "Physics",
+    "Chemistry",
+    "Maths",
+    "Biology",
+    "English"
+  ]
+
+};
+
+
+/* =========================
+   MATERIAL TYPES
+========================= */
+
+const materialTypes = [
+
+  "Notes",
+  "Questions",
+  "DPP",
+  "Practice Sheets",
+  "PYQs",
+  "Test Papers",
+  "Important Questions"
+
+];
+
+
+/* =========================
+   LOAD SUBJECTS
+========================= */
+
+function loadSubjects(){
+
+  const classValue =
+    document.getElementById("classSelect").value;
+
+  const subjectSelect =
+    document.getElementById("subjectSelect");
+
+  const materialSelect =
+    document.getElementById("materialSelect");
+
+  const result =
+    document.getElementById("materialResult");
+
+
+  subjectSelect.innerHTML =
+    '<option value="">Select Subject</option>';
+
+  materialSelect.innerHTML =
+    '<option value="">Select Material Type</option>';
+
+  result.innerHTML = "";
+
+  materialSelect.disabled = true;
+
+
+  if(classValue === ""){
+
+    subjectSelect.disabled = true;
+
+    return;
+
+  }
+
+
+  subjects[classValue].forEach(function(subject){
+
+    const option =
+      document.createElement("option");
+
+    option.value = subject;
+    option.textContent = subject;
+
+    subjectSelect.appendChild(option);
+
+  });
+
+
+  subjectSelect.disabled = false;
+
+}
+
+
+/* =========================
+   LOAD MATERIAL TYPES
+========================= */
+
+function loadMaterialTypes(){
+
+  const subject =
+    document.getElementById("subjectSelect").value;
+
+  const materialSelect =
+    document.getElementById("materialSelect");
+
+  const result =
+    document.getElementById("materialResult");
+
+
+  materialSelect.innerHTML =
+    '<option value="">Select Material Type</option>';
+
+  result.innerHTML = "";
+
+
+  if(subject === ""){
+
+    materialSelect.disabled = true;
+
+    return;
+
+  }
+
+
+  materialTypes.forEach(function(type){
+
+    const option =
+      document.createElement("option");
+
+    option.value = type;
+    option.textContent = type;
+
+    materialSelect.appendChild(option);
+
+  });
+
+
+  materialSelect.disabled = false;
+
+}
+
+
+/* =========================
+   LOAD MATERIALS FROM SUPABASE
+========================= */
+
+async function showMaterials(){
+
+  const classValue =
+    document.getElementById("classSelect").value;
+
+  const subject =
+    document.getElementById("subjectSelect").value;
+
+  const type =
+    document.getElementById("materialSelect").value;
+
+  const result =
+    document.getElementById("materialResult");
+
+
+  if(type === ""){
+
+    result.innerHTML = "";
+
+    return;
+
+  }
+
+
+  result.innerHTML = `
+
+    <div class="material-result-card">
+
+      <div class="loading">
+        ⏳ Loading study material...
+      </div>
+
+    </div>
+
+  `;
+
+
+  try{
+
+    const { data, error } =
+      await supabaseClient
+        .from("materials")
+        .select("*")
+        .eq("class", classValue)
+        .eq("subject", subject)
+        .eq("material_type", type)
+        .order("created_at", {
+          ascending:false
+        });
+
+
+    if(error){
+
+      console.error(
+        "Supabase material error:",
+        error
+      );
+
+      result.innerHTML = `
+
+        <div class="material-result-card">
+
+          <div class="material-empty no-material">
+
+            <div class="no-material-icon">
+              ⚠️
+            </div>
+
+            <h3>
+              Material Load नहीं हो पाया
+            </h3>
+
+            <p>
+              कृपया थोड़ी देर बाद फिर try करें.
+            </p>
+
+          </div>
+
+        </div>
+
+      `;
+
+      return;
+
+    }
+
+
+    let materialHTML = "";
+
+
+    if(data && data.length > 0){
+
+      materialHTML = `
+
+        <div class="material-list">
+
+      `;
+
+
+      for(const material of data){
+
+        let fileURL = "#";
+
+
+        if(material.file_path){
+
+          const { data: signedData, error: signedError } =
+            await supabaseClient
+              .storage
+              .from("study-materials")
+              .createSignedUrl(
+                material.file_path,
+                3600
+              );
+
+
+          if(!signedError && signedData){
+
+            fileURL =
+              signedData.signedUrl;
+
+          }
 
         }
 
-      });
 
-      const helpText =
-        document.getElementById("installHelpText");
+        materialHTML += `
 
-      if (helpText) {
+          <div class="material-item">
 
-        helpText.style.display = "none";
+            <div class="material-item-info">
+
+              <strong>
+                📄 ${escapeHTML(
+                  material.title ||
+                  material.file_name ||
+                  "Study Material"
+                )}
+              </strong>
+
+              <span>
+                ${escapeHTML(
+                  material.file_name ||
+                  "Study Material"
+                )}
+              </span>
+
+            </div>
+
+            ${
+              fileURL !== "#"
+
+              ?
+
+              `
+              <a
+                class="material-download"
+                href="${fileURL}"
+                target="_blank"
+                rel="noopener"
+              >
+                Open
+              </a>
+              `
+
+              :
+
+              `
+              <span
+                class="material-download"
+                style="background:#98a2b3;"
+              >
+                Unavailable
+              </span>
+              `
+
+            }
+
+          </div>
+
+        `;
 
       }
 
+
+      materialHTML += `
+        </div>
+      `;
+
+
+    }else{
+
+      materialHTML = `
+
+        <div class="material-empty no-material">
+
+          <div class="no-material-icon">
+            📚
+          </div>
+
+          <h3>
+            No Material Available
+          </h3>
+
+          <p>
+            अभी इस section में कोई material upload नहीं किया गया है.
+          </p>
+
+          <p style="margin-top:6px;">
+            Admin द्वारा material upload होने के बाद
+            यहाँ दिखाई देगा.
+          </p>
+
+        </div>
+
+      `;
+
     }
 
 
-    /*
-      Install PWA.
-    */
+    result.innerHTML = `
 
-    async function installNEETPlanner() {
+      <div class="material-result-card">
 
-      if (!deferredInstallPrompt) {
+        <h3>
+          📚 ${escapeHTML(type)}
+        </h3>
 
-        return;
+        <p class="material-info">
+          Class ${escapeHTML(classValue)} •
+          ${escapeHTML(subject)}
+        </p>
 
-      }
+        ${materialHTML}
 
-      deferredInstallPrompt.prompt();
+      </div>
 
-      const result =
-        await deferredInstallPrompt.userChoice;
+    `;
 
-      console.log(
-        "PWA installation result:",
-        result.outcome
+
+  }catch(error){
+
+    console.error(
+      "Unexpected material error:",
+      error
+    );
+
+
+    result.innerHTML = `
+
+      <div class="material-result-card">
+
+        <div class="material-empty no-material">
+
+          <div class="no-material-icon">
+            ⚠️
+          </div>
+
+          <h3>
+            Something went wrong
+          </h3>
+
+          <p>
+            कृपया page refresh करके फिर try करें.
+          </p>
+
+        </div>
+
+      </div>
+
+    `;
+
+  }
+
+}
+
+
+/* =========================
+   RESULTS FROM SUPABASE
+========================= */
+
+async function loadResults(classValue){
+
+  const container =
+    document.getElementById(
+      "resultsContainer"
+    );
+
+
+  container.innerHTML = `
+
+    <div class="student-result-item">
+
+      <div class="result-loading">
+        ⏳ Loading results...
+      </div>
+
+    </div>
+
+  `;
+
+
+  try{
+
+    const { data, error } =
+      await supabaseClient
+        .from("results")
+        .select("*")
+        .eq("class", classValue)
+        .eq("is_active", true)
+        .order("percentage", {
+          ascending:false
+        });
+
+
+    if(error){
+
+      console.error(
+        "Supabase results error:",
+        error
       );
 
-      deferredInstallPrompt = null;
 
-      hideInstallButtons();
+      container.innerHTML = `
 
-    }
+        <div class="student-result-item">
 
+          <strong>
+            ⚠️ Results load नहीं हो पाए
+          </strong>
 
-    /*
-      Hide install buttons after installation.
-    */
+          <span>
+            कृपया थोड़ी देर बाद फिर try करें.
+          </span>
 
-    function hideInstallButtons() {
+        </div>
 
-      const buttons = [
+      `;
 
-        document.getElementById("installAppBtn"),
-
-        document.getElementById("installAppBtnDashboard"),
-
-        document.getElementById("installAppBtnSettings")
-
-      ];
-
-      buttons.forEach((button) => {
-
-        if (button) {
-
-          button.style.display = "none";
-
-        }
-
-      });
+      return;
 
     }
 
 
-    /*
-      If app is already running in standalone mode,
-      installation button is unnecessary.
-    */
+    if(!data || data.length === 0){
 
-    function isAppInstalled() {
+      container.innerHTML = `
 
-      return (
-        window.matchMedia(
-          "(display-mode: standalone)"
-        ).matches ||
-        window.navigator.standalone === true
-      );
+        <div class="student-result-item">
 
-    }
+          <strong>
+            📊 No Results Available
+          </strong>
 
+          <span>
+            Class ${escapeHTML(classValue)}
+            के results अभी upload नहीं किए गए हैं.
+          </span>
 
-    if (isAppInstalled()) {
+        </div>
 
-      hideInstallButtons();
+      `;
 
-    }
-
-
-    /*
-      Service Worker registration.
-    */
-
-    if ("serviceWorker" in navigator) {
-
-      window.addEventListener(
-        "load",
-        () => {
-
-          navigator.serviceWorker
-            .register("./sw.js")
-            .then(() => {
-
-              console.log(
-                "NEET Planner Service Worker registered."
-              );
-
-            })
-            .catch((error) => {
-
-              console.error(
-                "NEET Planner Service Worker registration failed:",
-                error
-              );
-
-            });
-
-        }
-      );
+      return;
 
     }
 
-  </script>
+
+    container.innerHTML = data
+      .map(function(result){
+
+        return `
+
+          <div class="student-result-item">
+
+            <strong>
+              🏆 ${escapeHTML(
+                result.student_name ||
+                "Student"
+              )}
+            </strong>
+
+            ${
+              result.roll_number
+
+              ?
+
+              `
+              <span>
+                Roll Number:
+                ${escapeHTML(
+                  result.roll_number
+                )}
+              </span>
+              `
+
+              :
+
+              ""
+            }
+
+
+            ${
+              result.marks
+
+              ?
+
+              `
+              <span>
+                Marks:
+                ${escapeHTML(
+                  result.marks
+                )}
+              </span>
+              `
+
+              :
+
+              ""
+            }
+
+
+            ${
+              result.percentage
+
+              ?
+
+              `
+              <span>
+                Percentage:
+                ${escapeHTML(
+                  result.percentage
+                )}%
+              </span>
+              `
+
+              :
+
+              ""
+            }
+
+
+            ${
+              result.rank
+
+              ?
+
+              `
+              <span>
+                Rank:
+                ${escapeHTML(
+                  result.rank
+                )}
+              </span>
+              `
+
+              :
+
+              ""
+            }
+
+          </div>
+
+        `;
+
+      })
+      .join("");
+
+
+  }catch(error){
+
+    console.error(
+      "Unexpected results error:",
+      error
+    );
+
+
+    container.innerHTML = `
+
+      <div class="student-result-item">
+
+        <strong>
+          ⚠️ Something went wrong
+        </strong>
+
+        <span>
+          कृपया page refresh करके फिर try करें.
+        </span>
+
+      </div>
+
+    `;
+
+  }
+
+}
+
+
+/* =========================
+   HTML SAFETY
+========================= */
+
+function escapeHTML(value){
+
+  return String(value ?? "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+
+}
+
+
+/* =========================
+   START ANNOUNCEMENTS
+========================= */
+
+loadAnnouncements();
+
+</script>
+
 
 </body>
 </html>
