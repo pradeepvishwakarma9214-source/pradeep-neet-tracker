@@ -1,0 +1,11 @@
+{
+  "name": "NEET Planner & Tracker",
+  "short_name": "NEET Planner",
+  "description": "NEET study planner and backlog tracker",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#6c5ce7",
+  "orientation": "portrait",
+  "icons": []
+}

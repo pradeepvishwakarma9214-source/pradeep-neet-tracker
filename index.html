@@ -6,6 +6,10 @@
 
   <title>NEET Planner & Tracker</title>
 
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#6c5ce7">
+
   <link rel="stylesheet" href="style.css">
 </head>
 
@@ -154,7 +158,6 @@
       </p>
 
 
-      <!-- Current subject information -->
       <div
         id="chapterSubjectTitle"
         class="selected-info"
@@ -162,7 +165,6 @@
       </div>
 
 
-      <!-- Chapters already added -->
       <div
         id="subjectChapterSummary"
         class="subject-chapter-summary hidden"
@@ -179,7 +181,6 @@
       </div>
 
 
-      <!-- Chapter options -->
       <div
         id="chapterOptions"
         class="chapter-selection"
@@ -245,7 +246,6 @@
       </p>
 
 
-      <!-- Selected chapter -->
       <div
         id="selectedChapterInfo"
         class="selected-info"
@@ -253,7 +253,6 @@
       </div>
 
 
-      <!-- Total lectures -->
       <div class="input-card">
 
         <label for="totalLectures">
@@ -276,7 +275,6 @@
       </div>
 
 
-      <!-- Lecture selection -->
       <div
         id="lectureSelectionBox"
         class="lecture-selection hidden"
@@ -302,7 +300,6 @@
         </div>
 
 
-        <!-- Range selection -->
         <div class="range-selector">
 
           <div class="range-title">
@@ -351,7 +348,6 @@
         </div>
 
 
-        <!-- Individual lecture checkboxes -->
         <div
           id="lectureCheckboxes"
           class="lecture-checkboxes"
@@ -475,7 +471,6 @@
       </p>
 
 
-      <!-- Overall backlog summary -->
       <div
         id="overallBacklogSummary"
         class="backlog-summary-card"
@@ -1162,41 +1157,82 @@
           </strong>
 
         </div>
-    <div class="study-time-card">
-  <div class="card-heading">
-    <div>
-      <span class="eyebrow">STUDY TIME</span>
-      <h3>Today's Study Time</h3>
-    </div>
-    <strong id="studyTimeProgressPercent">0%</strong>
-  </div>
-
-  <div class="study-time-stats">
-    <div class="study-time-stat">
-      <span>Planned</span>
-      <strong id="studyTimePlanned">0h 0m</strong>
-    </div>
-
-    <div class="study-time-stat">
-      <span>Completed</span>
-      <strong id="studyTimeCompleted">0h 0m</strong>
-    </div>
-
-    <div class="study-time-stat">
-      <span>Remaining</span>
-      <strong id="studyTimeRemaining">0h 0m</strong>
-    </div>
-  </div>
-
-  <div class="progress-track">
-    <div id="studyTimeProgressBar" class="progress-fill"></div>
-  </div>
-</div>
 
         <div class="progress-track">
 
           <div
             id="todayProgressBar"
+            class="progress-fill"
+          ></div>
+
+        </div>
+
+      </div>
+
+
+      <!-- Study Time -->
+      <div class="study-time-card">
+
+        <div class="card-heading">
+
+          <div>
+            <span class="eyebrow">
+              STUDY TIME
+            </span>
+
+            <h3>
+              Today's Study Time
+            </h3>
+          </div>
+
+          <strong id="studyTimeProgressPercent">
+            0%
+          </strong>
+
+        </div>
+
+
+        <div class="study-time-stats">
+
+          <div class="study-time-stat">
+            <span>
+              Planned
+            </span>
+
+            <strong id="studyTimePlanned">
+              0h 0m
+            </strong>
+          </div>
+
+
+          <div class="study-time-stat">
+            <span>
+              Completed
+            </span>
+
+            <strong id="studyTimeCompleted">
+              0h 0m
+            </strong>
+          </div>
+
+
+          <div class="study-time-stat">
+            <span>
+              Remaining
+            </span>
+
+            <strong id="studyTimeRemaining">
+              0h 0m
+            </strong>
+          </div>
+
+        </div>
+
+
+        <div class="progress-track">
+
+          <div
+            id="studyTimeProgressBar"
             class="progress-fill"
           ></div>
 
@@ -1772,6 +1808,26 @@
        JAVASCRIPT
   ========================== -->
   <script src="script.js"></script>
+
+  <!-- =========================
+       PWA SERVICE WORKER
+  ========================== -->
+  <script>
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker.register("./sw.js")
+          .then(() => {
+            console.log("NEET Planner Service Worker registered.");
+          })
+          .catch((error) => {
+            console.error(
+              "NEET Planner Service Worker registration failed:",
+              error
+            );
+          });
+      });
+    }
+  </script>
 
 </body>
 </html>
