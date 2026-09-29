@@ -2,1324 +2,386 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <meta
+    name="theme-color"
+    content="#6c5ce7"
+  >
+
+  <meta
+    name="description"
+    content="NEET study planner and backlog tracker"
+  >
+
+  <link rel="manifest" href="./manifest.json">
 
   <title>NEET Planner & Tracker</title>
 
-  <!-- PWA -->
-  <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#6c5ce7">
-
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="./style.css">
 </head>
 
 <body>
 
-  <!-- =========================
-       APP HEADER
-  ========================== -->
-  <header class="app-header">
-    <div class="brand">
-      <div class="brand-icon">🎯</div>
+  <!-- ================= HEADER ================= -->
 
-      <div>
-        <h1>NEET Planner</h1>
-        <p>Backlog → Zero</p>
+  <header class="top-header">
+    <div class="header-inner">
+
+      <div class="brand">
+        <div class="brand-icon">🎯</div>
+
+        <div>
+          <h1>NEET Planner</h1>
+          <p>Study Planner & Backlog Tracker</p>
+        </div>
       </div>
-    </div>
 
-    <div class="header-actions">
-      <button id="resetAppBtn" class="icon-btn" title="Reset Planner">
-        ↻
+      <!-- INSTALL APP BUTTON -->
+      <button
+        id="installAppBtn"
+        class="install-app-btn"
+        type="button"
+        style="display:none;"
+      >
+        📱 Install App
       </button>
+
     </div>
   </header>
 
 
-  <!-- =========================
-       ONBOARDING
-  ========================== -->
-  <main id="onboarding" class="onboarding">
+  <!-- ================= ONBOARDING ================= -->
 
-    <!-- Progress -->
-    <div class="onboarding-progress">
+  <section id="onboarding" class="onboarding-section">
 
-      <div class="progress-top">
-        <span id="stepTitle">Step 1 of 10</span>
-        <span id="stepPercent">10%</span>
+    <div class="onboarding-card">
+
+      <div class="progress-header">
+        <div>
+          <span id="stepLabel">Step 1 of 10</span>
+        </div>
+
+        <div>
+          <span id="stepPercent">10%</span>
+        </div>
       </div>
 
       <div class="progress-track">
-        <div id="onboardingProgressBar" class="progress-fill"></div>
+        <div
+          id="onboardingProgress"
+          class="progress-fill"
+          style="width:10%;"
+        ></div>
+      </div>
+
+
+      <div id="onboardingContent">
+        <!-- JavaScript will render onboarding steps here -->
+      </div>
+
+
+      <div class="onboarding-actions">
+
+        <button
+          id="backStepBtn"
+          class="secondary-btn"
+          type="button"
+        >
+          ← Back
+        </button>
+
+        <button
+          id="nextStepBtn"
+          class="primary-btn"
+          type="button"
+        >
+          Next →
+        </button>
+
       </div>
 
     </div>
 
+  </section>
 
-    <!-- ==================================
-         STEP 1 — BATCH SELECTION
-    =================================== -->
-    <section class="onboarding-step active" data-step="1">
 
-      <div class="step-icon">🎓</div>
+  <!-- ================= MAIN APP ================= -->
 
-      <h2>Which batch are you studying in?</h2>
-
-      <p class="step-description">
-        Select your NEET batch to automatically load the faculty
-        and weekly class schedule.
-      </p>
-
-      <div id="batchOptions" class="selection-grid">
-        <!-- JS will generate batch cards -->
-      </div>
-
-      <button id="batchNextBtn" class="primary-btn" disabled>
-        Continue →
-      </button>
-
-    </section>
-
-
-    <!-- ==================================
-         STEP 2 — MULTIPLE SUBJECTS
-    =================================== -->
-    <section class="onboarding-step" data-step="2">
-
-      <div class="step-icon">📚</div>
-
-      <h2>Select your backlog subjects</h2>
-
-      <p class="step-description">
-        You can select multiple subjects.
-        Every selected subject will be handled separately.
-      </p>
-
-      <div id="subjectOptions" class="selection-grid">
-        <!-- JS will generate subject cards -->
-      </div>
-
-      <div class="selection-hint">
-        💡 You can select more than one subject.
-      </div>
-
-      <div class="step-actions">
-
-        <button
-          id="subjectBackBtn"
-          class="secondary-btn"
-        >
-          ← Back
-        </button>
-
-        <button
-          id="subjectNextBtn"
-          class="primary-btn"
-          disabled
-        >
-          Continue →
-        </button>
-
-      </div>
-
-    </section>
-
-
-    <!-- ==================================
-         STEP 3 — SUBJECT-WISE CHAPTER
-    =================================== -->
-    <section class="onboarding-step" data-step="3">
-
-      <div class="step-icon">📖</div>
-
-      <div class="subject-progress-header">
-
-        <div>
-          <span class="small-label">
-            CURRENT SUBJECT
-          </span>
-
-          <h2 id="currentSubjectTitle">
-            Chapter Selection
-          </h2>
-        </div>
-
-        <div
-          id="subjectProgressCounter"
-          class="progress-counter"
-        >
-          Subject 1 of 1
-        </div>
-
-      </div>
-
-      <p class="step-description">
-        Select the chapter for this subject.
-      </p>
-
-
-      <div
-        id="chapterSubjectTitle"
-        class="selected-info"
-      >
-      </div>
-
-
-      <div
-        id="subjectChapterSummary"
-        class="subject-chapter-summary hidden"
-      >
-        <div class="summary-title">
-          Chapters added for this subject
-        </div>
-
-        <div
-          id="subjectChapterList"
-          class="mini-list"
-        >
-        </div>
-      </div>
-
-
-      <div
-        id="chapterOptions"
-        class="chapter-selection"
-      >
-        <!-- JS will generate chapter buttons -->
-      </div>
-
-
-      <div class="step-actions">
-
-        <button
-          id="chapterBackBtn"
-          class="secondary-btn"
-        >
-          ← Back
-        </button>
-
-        <button
-          id="chapterNextBtn"
-          class="primary-btn"
-          disabled
-        >
-          Continue →
-        </button>
-
-      </div>
-
-    </section>
-
-
-    <!-- ==================================
-         STEP 4 — LECTURES & BACKLOG
-    =================================== -->
-    <section class="onboarding-step" data-step="4">
-
-      <div class="step-icon">🎥</div>
-
-      <div class="subject-progress-header">
-
-        <div>
-          <span class="small-label">
-            LECTURE DETAILS
-          </span>
-
-          <h2 id="lectureStepTitle">
-            Lecture-wise Backlog
-          </h2>
-        </div>
-
-        <div
-          id="chapterProgressCounter"
-          class="progress-counter"
-        >
-          Chapter 1
-        </div>
-
-      </div>
-
-
-      <p class="step-description">
-        Enter how many lectures have been conducted
-        and select the exact lectures you have pending.
-      </p>
-
-
-      <div
-        id="selectedChapterInfo"
-        class="selected-info"
-      >
-      </div>
-
-
-      <div class="input-card">
-
-        <label for="totalLectures">
-          How many lectures have been conducted so far?
-        </label>
-
-        <p class="input-help">
-          Example: If Lecture 1–15 have been conducted,
-          enter 15.
-        </p>
-
-        <input
-          type="number"
-          id="totalLectures"
-          min="1"
-          max="500"
-          placeholder="Enter total lectures"
-        >
-
-      </div>
-
-
-      <div
-        id="lectureSelectionBox"
-        class="lecture-selection hidden"
-      >
-
-        <div class="lecture-selection-header">
-
-          <div>
-            <h3>Select backlog lectures</h3>
-
-            <p>
-              Tick the lectures you have not completed.
-            </p>
-          </div>
-
-          <div
-            id="backlogLectureCount"
-            class="count-badge"
-          >
-            0 Backlog
-          </div>
-
-        </div>
-
-
-        <div class="range-selector">
-
-          <div class="range-title">
-            Quick select range
-          </div>
-
-          <div class="range-inputs">
-
-            <div>
-              <label for="rangeStart">
-                From
-              </label>
-
-              <input
-                type="number"
-                id="rangeStart"
-                min="1"
-                placeholder="1"
-              >
-            </div>
-
-            <span class="range-dash">→</span>
-
-            <div>
-              <label for="rangeEnd">
-                To
-              </label>
-
-              <input
-                type="number"
-                id="rangeEnd"
-                min="1"
-                placeholder="10"
-              >
-            </div>
-
-            <button
-              id="applyRangeBtn"
-              class="secondary-small-btn"
-            >
-              Select Range
-            </button>
-
-          </div>
-
-        </div>
-
-
-        <div
-          id="lectureCheckboxes"
-          class="lecture-checkboxes"
-        >
-          <!-- JS generates lectures -->
-        </div>
-
-      </div>
-
-
-      <div class="step-actions">
-
-        <button
-          id="lectureBackBtn"
-          class="secondary-btn"
-        >
-          ← Back
-        </button>
-
-        <button
-          id="lectureNextBtn"
-          class="primary-btn"
-          disabled
-        >
-          Save Chapter →
-        </button>
-
-      </div>
-
-    </section>
-
-
-    <!-- ==================================
-         STEP 5 — CHAPTER/SUBJECT CONTINUE
-    =================================== -->
-    <section class="onboarding-step" data-step="5">
-
-      <div class="step-icon">✅</div>
-
-      <h2 id="chapterCompletedTitle">
-        Chapter Saved
-      </h2>
-
-      <p
-        id="chapterCompletedDescription"
-        class="step-description"
-      >
-        Your chapter details have been saved.
-      </p>
-
-
-      <div
-        id="chapterCompletedSummary"
-        class="completion-card"
-      >
-      </div>
-
-
-      <div class="completion-options">
-
-        <button
-          id="addAnotherChapterBtn"
-          class="option-card"
-        >
-
-          <span class="option-icon">➕</span>
-
-          <div>
-            <strong>Add another chapter</strong>
-
-            <small>
-              Add more backlog from this same subject.
-            </small>
-          </div>
-
-        </button>
-
-
-        <button
-          id="nextSubjectBtn"
-          class="option-card"
-        >
-
-          <span class="option-icon">➡️</span>
-
-          <div>
-            <strong>Continue to next subject</strong>
-
-            <small>
-              Move to the next selected backlog subject.
-            </small>
-          </div>
-
-        </button>
-
-      </div>
-
-
-      <button
-        id="allSubjectsCompleteBtn"
-        class="primary-btn hidden"
-      >
-        Continue to Planning →
-      </button>
-
-    </section>
-
-
-    <!-- ==================================
-         STEP 6 — TARGET DATE
-    =================================== -->
-    <section class="onboarding-step" data-step="6">
-
-      <div class="step-icon">📅</div>
-
-      <h2>When should your backlog become ZERO?</h2>
-
-      <p class="step-description">
-        Choose the target date by which all selected
-        backlog lectures should be completed.
-      </p>
-
-
-      <div
-        id="overallBacklogSummary"
-        class="backlog-summary-card"
-      >
-        <!-- JS -->
-      </div>
-
-
-      <div class="input-card">
-
-        <label for="targetDate">
-          Backlog Zero Target Date
-        </label>
-
-        <input
-          type="date"
-          id="targetDate"
-        >
-
-        <p class="input-help">
-          Your plan will automatically distribute
-          the remaining backlog across the available days.
-        </p>
-
-      </div>
-
-
-      <div class="step-actions">
-
-        <button
-          id="targetBackBtn"
-          class="secondary-btn"
-        >
-          ← Back
-        </button>
-
-        <button
-          id="targetNextBtn"
-          class="primary-btn"
-          disabled
-        >
-          Continue →
-        </button>
-
-      </div>
-
-    </section>
-
-
-    <!-- ==================================
-         STEP 7 — LECTURE DURATION
-    =================================== -->
-    <section class="onboarding-step" data-step="7">
-
-      <div class="step-icon">⏱️</div>
-
-      <h2>How long is one lecture?</h2>
-
-      <p class="step-description">
-        Default lecture duration is 105 minutes.
-        You can customize it.
-      </p>
-
-
-      <div class="time-option-grid">
-
-        <button
-          class="time-option"
-          data-minutes="90"
-        >
-          <strong>90 min</strong>
-          <span>1.5 hours</span>
-        </button>
-
-        <button
-          class="time-option selected"
-          data-minutes="105"
-        >
-          <strong>105 min</strong>
-          <span>1 hr 45 min</span>
-        </button>
-
-        <button
-          class="time-option"
-          data-minutes="120"
-        >
-          <strong>120 min</strong>
-          <span>2 hours</span>
-        </button>
-
-        <button
-          class="time-option"
-          data-minutes="150"
-        >
-          <strong>150 min</strong>
-          <span>2.5 hours</span>
-        </button>
-
-      </div>
-
-
-      <div class="custom-time-card">
-
-        <label for="customLectureTime">
-          Or enter custom duration
-        </label>
-
-        <div class="custom-time-input">
-
-          <input
-            type="number"
-            id="customLectureTime"
-            min="15"
-            max="300"
-            placeholder="105"
-          >
-
-          <span>minutes</span>
-
-        </div>
-
-      </div>
-
-
-      <div class="step-actions">
-
-        <button
-          id="lectureTimeBackBtn"
-          class="secondary-btn"
-        >
-          ← Back
-        </button>
-
-        <button
-          id="lectureTimeNextBtn"
-          class="primary-btn"
-        >
-          Continue →
-        </button>
-
-      </div>
-
-    </section>
-
-
-    <!-- ==================================
-         STEP 8 — NOTES + DPP
-    =================================== -->
-    <section class="onboarding-step" data-step="8">
-
-      <div class="step-icon">📝</div>
-
-      <h2>Notes & DPP time</h2>
-
-      <p class="step-description">
-        Set the extra time you need after each lecture.
-      </p>
-
-
-      <div class="settings-card">
-
-        <div class="setting-row">
-
-          <div class="setting-info">
-
-            <strong>Notes time per lecture</strong>
-
-            <span>
-              Time needed to revise/write lecture notes.
-            </span>
-
-          </div>
-
-          <div class="setting-input">
-
-            <input
-              type="number"
-              id="notesMinutes"
-              min="0"
-              value="30"
-            >
-
-            <span>min</span>
-
-          </div>
-
-        </div>
-
-
-        <div class="setting-row">
-
-          <div class="setting-info">
-
-            <strong>DPP time per lecture</strong>
-
-            <span>
-              Time needed to solve the DPP of each lecture.
-            </span>
-
-          </div>
-
-          <div class="setting-input">
-
-            <input
-              type="number"
-              id="dppMinutes"
-              min="0"
-              value="30"
-            >
-
-            <span>min</span>
-
-          </div>
-
-        </div>
-
-      </div>
-
-
-      <div class="info-box">
-        💡 Every backlog lecture will automatically get
-        <strong>1 DPP</strong>.
-      </div>
-
-
-      <div class="step-actions">
-
-        <button
-          id="notesBackBtn"
-          class="secondary-btn"
-        >
-          ← Back
-        </button>
-
-        <button
-          id="notesNextBtn"
-          class="primary-btn"
-        >
-          Continue →
-        </button>
-
-      </div>
-
-    </section>
-
-
-    <!-- ==================================
-         STEP 9 — QUESTIONS
-    =================================== -->
-    <section class="onboarding-step" data-step="9">
-
-      <div class="step-icon">❓</div>
-
-      <h2>Question practice</h2>
-
-      <p class="step-description">
-        Set how much time you want to spend on
-        independent NEET question practice each day.
-      </p>
-
-
-      <div class="input-card">
-
-        <label for="questionMinutes">
-          Daily Question Practice
-        </label>
-
-        <div class="large-number-input">
-
-          <input
-            type="number"
-            id="questionMinutes"
-            min="0"
-            value="60"
-          >
-
-          <span>minutes / day</span>
-
-        </div>
-
-      </div>
-
-
-      <div class="practice-suggestions">
-
-        <button
-          class="practice-option"
-          data-minutes="30"
-        >
-          30 min
-        </button>
-
-        <button
-          class="practice-option"
-          data-minutes="45"
-        >
-          45 min
-        </button>
-
-        <button
-          class="practice-option selected"
-          data-minutes="60"
-        >
-          60 min
-        </button>
-
-        <button
-          class="practice-option"
-          data-minutes="90"
-        >
-          90 min
-        </button>
-
-        <button
-          class="practice-option"
-          data-minutes="120"
-        >
-          120 min
-        </button>
-
-      </div>
-
-
-      <div class="step-actions">
-
-        <button
-          id="questionBackBtn"
-          class="secondary-btn"
-        >
-          ← Back
-        </button>
-
-        <button
-          id="questionNextBtn"
-          class="primary-btn"
-        >
-          Continue →
-        </button>
-
-      </div>
-
-    </section>
-
-
-    <!-- ==================================
-         STEP 10 — REVISION
-    =================================== -->
-    <section class="onboarding-step" data-step="10">
-
-      <div class="step-icon">🔁</div>
-
-      <h2>Revision time</h2>
-
-      <p class="step-description">
-        Set your daily revision time.
-      </p>
-
-
-      <div class="input-card">
-
-        <label for="revisionMinutes">
-          Daily Revision
-        </label>
-
-        <div class="large-number-input">
-
-          <input
-            type="number"
-            id="revisionMinutes"
-            min="0"
-            value="45"
-          >
-
-          <span>minutes / day</span>
-
-        </div>
-
-      </div>
-
-
-      <div class="practice-suggestions">
-
-        <button
-          class="revision-option"
-          data-minutes="30"
-        >
-          30 min
-        </button>
-
-        <button
-          class="revision-option selected"
-          data-minutes="45"
-        >
-          45 min
-        </button>
-
-        <button
-          class="revision-option"
-          data-minutes="60"
-        >
-          60 min
-        </button>
-
-        <button
-          class="revision-option"
-          data-minutes="90"
-        >
-          90 min
-        </button>
-
-      </div>
-
-
-      <div class="step-actions">
-
-        <button
-          id="revisionBackBtn"
-          class="secondary-btn"
-        >
-          ← Back
-        </button>
-
-        <button
-          id="revisionNextBtn"
-          class="primary-btn"
-        >
-          Continue →
-        </button>
-
-      </div>
-
-    </section>
-
-
-    <!-- ==================================
-         STEP 11 — DAILY CAPACITY
-    =================================== -->
-    <section class="onboarding-step" data-step="11">
-
-      <div class="step-icon">🔥</div>
-
-      <h2>How much can you study per day?</h2>
-
-      <p class="step-description">
-        Set your maximum available study time.
-        The planner will use this to create a realistic
-        combined schedule.
-      </p>
-
-
-      <div class="input-card">
-
-        <label for="dailyHours">
-          Maximum study hours per day
-        </label>
-
-        <div class="large-number-input">
-
-          <input
-            type="number"
-            id="dailyHours"
-            min="1"
-            max="24"
-            step="0.5"
-            value="12"
-          >
-
-          <span>hours / day</span>
-
-        </div>
-
-      </div>
-
-
-      <div class="capacity-options">
-
-        <button
-          class="capacity-option"
-          data-hours="6"
-        >
-          6 hrs
-        </button>
-
-        <button
-          class="capacity-option"
-          data-hours="8"
-        >
-          8 hrs
-        </button>
-
-        <button
-          class="capacity-option"
-          data-hours="10"
-        >
-          10 hrs
-        </button>
-
-        <button
-          class="capacity-option selected"
-          data-hours="12"
-        >
-          12 hrs
-        </button>
-
-        <button
-          class="capacity-option"
-          data-hours="14"
-        >
-          14 hrs
-        </button>
-
-      </div>
-
-
-      <div class="info-box">
-        📌 The planner will include lectures, notes, DPP,
-        questions, revision and current classes within
-        your daily capacity.
-      </div>
-
-
-      <div class="step-actions">
-
-        <button
-          id="capacityBackBtn"
-          class="secondary-btn"
-        >
-          ← Back
-        </button>
-
-        <button
-          id="generatePlanBtn"
-          class="primary-btn"
-        >
-          Generate My Complete Plan 🚀
-        </button>
-
-      </div>
-
-    </section>
-
-
-    <!-- ==================================
-         READY / PLAN GENERATED
-    =================================== -->
-    <section
-      class="onboarding-step"
-      data-step="ready"
-    >
-
-      <div class="ready-animation">
-        🎯
-      </div>
-
-      <h2>Your NEET plan is ready!</h2>
-
-      <p class="step-description">
-        Your combined subject-wise backlog planner
-        has been generated.
-      </p>
-
-
-      <div
-        id="readySummary"
-        class="ready-summary"
-      >
-        <!-- JS -->
-      </div>
-
-
-      <button
-        id="openDashboardBtn"
-        class="primary-btn large-btn"
-      >
-        Open Dashboard →
-      </button>
-
-    </section>
-
-  </main>
-
-
-  <!-- =========================
-       MAIN APP
-  ========================== -->
-  <div
+  <main
     id="app"
-    class="app hidden"
+    class="main-app"
+    style="display:none;"
   >
 
+    <!-- ================= APP NAVIGATION ================= -->
 
-    <!-- ==================================
-         DASHBOARD PAGE
-    =================================== -->
+    <nav class="app-nav">
+
+      <button
+        class="nav-btn active"
+        data-page="dashboardPage"
+        type="button"
+      >
+        🏠 Dashboard
+      </button>
+
+      <button
+        class="nav-btn"
+        data-page="chaptersPage"
+        type="button"
+      >
+        📚 Chapters
+      </button>
+
+      <button
+        class="nav-btn"
+        data-page="plannerPage"
+        type="button"
+      >
+        🗓️ Planner
+      </button>
+
+      <button
+        class="nav-btn"
+        data-page="settingsPage"
+        type="button"
+      >
+        ⚙️ Settings
+      </button>
+
+    </nav>
+
+
+    <!-- ================= DASHBOARD ================= -->
+
     <section
       id="dashboardPage"
-      class="app-page active"
+      class="page active-page"
     >
 
       <div class="page-header">
 
         <div>
-          <span class="eyebrow">
-            TODAY
-          </span>
+          <h2>Today's Dashboard</h2>
+          <p id="dashboardDate"></p>
+        </div>
 
-          <h2 id="dashboardGreeting">
-            Today's Plan
-          </h2>
+        <div class="dashboard-actions">
 
-          <p id="dashboardDate">
-          </p>
+          <button
+            id="installAppBtnDashboard"
+            class="install-app-btn dashboard-install-btn"
+            type="button"
+            style="display:none;"
+          >
+            📱 Install App
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <!-- CURRENT CLASSES -->
+
+      <div class="dashboard-section">
+
+        <div class="section-title">
+          <h3>🎓 Today's Current Classes</h3>
         </div>
 
         <div
-          id="dashboardProgressCircle"
-          class="progress-circle"
-        >
-          <span id="dashboardProgressPercent">
-            0%
-          </span>
-        </div>
+          id="todayClasses"
+          class="task-list"
+        ></div>
 
       </div>
 
 
-      <!-- Overall progress -->
-      <div class="overall-progress-card">
+      <!-- TODAY'S PROGRESS -->
 
-        <div class="progress-card-top">
+      <div class="dashboard-section">
 
-          <div>
-            <span>
-              Overall Backlog Progress
-            </span>
-
-            <strong id="overallProgressText">
-              0 / 0
-            </strong>
-          </div>
-
-          <span id="overallProgressPercent">
-            0%
-          </span>
-
+        <div class="section-title">
+          <h3>📊 Today's Progress</h3>
         </div>
 
-        <div class="progress-track large">
+        <div class="progress-card">
 
-          <div
-            id="overallProgressBar"
-            class="progress-fill"
-          ></div>
+          <div class="progress-card-header">
 
-        </div>
-
-      </div>
-
-
-      <!-- Today's progress -->
-      <div class="today-progress-card">
-
-        <div class="card-heading">
-
-          <div>
-            <span class="eyebrow">
-              TODAY'S PROGRESS
-            </span>
-
-            <h3>
-              <span id="todayCompletedCount">
-                0
+            <div>
+              <span id="todayProgressText">
+                0/0
               </span>
-              /
-              <span id="todayTotalCount">
-                0
-              </span>
-              tasks
-            </h3>
-          </div>
 
-          <strong id="todayProgressPercent">
-            0%
-          </strong>
+              <p>Tasks completed</p>
+            </div>
 
-        </div>
-
-        <div class="progress-track">
-
-          <div
-            id="todayProgressBar"
-            class="progress-fill"
-          ></div>
-
-        </div>
-
-      </div>
-
-
-      <!-- Study Time -->
-      <div class="study-time-card">
-
-        <div class="card-heading">
-
-          <div>
-            <span class="eyebrow">
-              STUDY TIME
-            </span>
-
-            <h3>
-              Today's Study Time
-            </h3>
-          </div>
-
-          <strong id="studyTimeProgressPercent">
-            0%
-          </strong>
-
-        </div>
-
-
-        <div class="study-time-stats">
-
-          <div class="study-time-stat">
-            <span>
-              Planned
-            </span>
-
-            <strong id="studyTimePlanned">
-              0h 0m
+            <strong id="todayProgressPercent">
+              0%
             </strong>
+
           </div>
 
+          <div class="progress-track">
 
-          <div class="study-time-stat">
-            <span>
-              Completed
-            </span>
+            <div
+              id="todayProgressBar"
+              class="progress-fill"
+              style="width:0%;"
+            ></div>
 
-            <strong id="studyTimeCompleted">
-              0h 0m
-            </strong>
-          </div>
-
-
-          <div class="study-time-stat">
-            <span>
-              Remaining
-            </span>
-
-            <strong id="studyTimeRemaining">
-              0h 0m
-            </strong>
           </div>
 
         </div>
 
+      </div>
 
-        <div class="progress-track">
 
-          <div
-            id="studyTimeProgressBar"
-            class="progress-fill"
-          ></div>
+      <!-- STUDY TIME -->
+
+      <div class="dashboard-section">
+
+        <div class="study-time-card">
+
+          <div class="study-time-header">
+
+            <div class="study-time-title">
+
+              <div class="study-time-icon">
+                ⏱️
+              </div>
+
+              <div>
+                <h3>Study Time</h3>
+                <p>Today's planned study time</p>
+              </div>
+
+            </div>
+
+            <div
+              id="studyTimeProgressPercent"
+              class="study-time-percent"
+            >
+              0%
+            </div>
+
+          </div>
+
+
+          <div class="study-time-stats">
+
+            <div class="study-time-stat">
+              <span>Planned</span>
+              <strong id="studyTimePlanned">
+                0m
+              </strong>
+            </div>
+
+            <div class="study-time-stat">
+              <span>Completed</span>
+              <strong id="studyTimeCompleted">
+                0m
+              </strong>
+            </div>
+
+            <div class="study-time-stat">
+              <span>Remaining</span>
+              <strong id="studyTimeRemaining">
+                0m
+              </strong>
+            </div>
+
+          </div>
+
+
+          <div class="study-time-progress">
+
+            <div class="progress-track">
+
+              <div
+                id="studyTimeProgressBar"
+                class="progress-fill"
+                style="width:0%;"
+              ></div>
+
+            </div>
+
+          </div>
 
         </div>
 
       </div>
 
 
-      <!-- Today's tasks -->
-      <div class="section-heading">
+      <!-- TODAY'S TASKS -->
 
-        <div>
-          <span class="eyebrow">
-            YOUR WORK
-          </span>
+      <div class="dashboard-section">
 
-          <h3>
-            Today's Tasks
-          </h3>
+        <div class="section-title">
+          <h3>✅ Today's Tasks</h3>
         </div>
 
-        <button
-          id="refreshTodayBtn"
-          class="text-btn"
-        >
-          Refresh
-        </button>
+        <div
+          id="todayTasks"
+          class="task-list"
+        ></div>
 
       </div>
 
 
-      <div
-        id="todayTasks"
-        class="task-list"
-      >
-        <!-- JS -->
-      </div>
+      <!-- PENDING WORK -->
 
+      <div class="dashboard-section">
 
-      <!-- Pending work -->
-      <div class="section-heading">
-
-        <div>
-          <span class="eyebrow">
-            PENDING
-          </span>
-
-          <h3>
-            Pending Work
-          </h3>
+        <div class="section-title">
+          <h3>⏳ Pending Work</h3>
         </div>
 
+        <div
+          id="pendingTasks"
+          class="task-list"
+        ></div>
+
       </div>
 
 
-      <div
-        id="pendingTasks"
-        class="task-list"
-      >
-        <!-- JS -->
+      <!-- OVERALL PROGRESS -->
+
+      <div class="dashboard-section">
+
+        <div class="section-title">
+          <h3>📈 Overall Progress</h3>
+        </div>
+
+        <div
+          id="overallProgress"
+          class="overall-progress"
+        ></div>
+
       </div>
 
     </section>
 
 
-    <!-- ==================================
-         CHAPTERS PAGE
-    =================================== -->
+    <!-- ================= CHAPTERS PAGE ================= -->
+
     <section
       id="chaptersPage"
-      class="app-page"
+      class="page"
     >
 
       <div class="page-header">
 
         <div>
-          <span class="eyebrow">
-            TRACKER
-          </span>
-
-          <h2>
-            Chapters
-          </h2>
-
-          <p>
-            Subject-wise lecture progress
-          </p>
+          <h2>📚 Chapters</h2>
+          <p>Track your lecture-wise progress</p>
         </div>
 
       </div>
@@ -1328,136 +390,48 @@
       <div
         id="chaptersContainer"
         class="chapters-container"
-      >
-        <!-- JS -->
-      </div>
+      ></div>
 
     </section>
 
 
-    <!-- ==================================
-         PLANNER PAGE
-    =================================== -->
+    <!-- ================= PLANNER PAGE ================= -->
+
     <section
       id="plannerPage"
-      class="app-page"
+      class="page"
     >
 
       <div class="page-header">
 
         <div>
-          <span class="eyebrow">
-            COMPLETE PLAN
-          </span>
-
-          <h2>
-            Planner
-          </h2>
-
-          <p>
-            Your complete day-wise schedule
-          </p>
-        </div>
-
-      </div>
-
-
-      <!-- Planner controls -->
-      <div class="planner-controls">
-
-        <button
-          id="previousDayBtn"
-          class="secondary-small-btn"
-        >
-          ← Previous
-        </button>
-
-        <div
-          id="plannerDateLabel"
-          class="planner-date-label"
-        >
-          Today
-        </div>
-
-        <button
-          id="nextDayBtn"
-          class="secondary-small-btn"
-        >
-          Next →
-        </button>
-
-      </div>
-
-
-      <div
-        id="plannerDays"
-        class="planner-days"
-      >
-        <!-- JS -->
-      </div>
-
-    </section>
-
-
-    <!-- ==================================
-         TEACHERS PAGE
-    =================================== -->
-    <section
-      id="teachersPage"
-      class="app-page"
-    >
-
-      <div class="page-header">
-
-        <div>
-          <span class="eyebrow">
-            FACULTY
-          </span>
-
-          <h2>
-            My Teachers
-          </h2>
-
-          <p>
-            Faculty for your selected batch
-          </p>
+          <h2>🗓️ Study Planner</h2>
+          <p>Your complete backlog plan</p>
         </div>
 
       </div>
 
 
       <div
-        id="teachersContainer"
-        class="teachers-grid"
-      >
-        <!-- JS -->
-      </div>
+        id="plannerContainer"
+        class="planner-container"
+      ></div>
 
     </section>
 
 
-    <!-- ==================================
-         SETTINGS PAGE
-    =================================== -->
+    <!-- ================= SETTINGS PAGE ================= -->
+
     <section
       id="settingsPage"
-      class="app-page"
+      class="page"
     >
 
       <div class="page-header">
 
         <div>
-          <span class="eyebrow">
-            SETTINGS
-          </span>
-
-          <h2>
-            Planner Settings
-          </h2>
-
-          <p>
-            Manage your planner preferences
-          </p>
+          <h2>⚙️ Settings</h2>
+          <p>Customize your study planner</p>
         </div>
 
       </div>
@@ -1465,179 +439,97 @@
 
       <div class="settings-card">
 
-        <div class="setting-row">
+        <div class="settings-group">
 
-          <div class="setting-info">
+          <label for="lectureMinutes">
+            Lecture duration
+          </label>
 
-            <strong>
-              Lecture duration
-            </strong>
+          <input
+            id="lectureMinutes"
+            type="number"
+            min="1"
+          >
 
-            <span>
-              Default time for each lecture
-            </span>
-
-          </div>
-
-          <div class="setting-input">
-
-            <input
-              type="number"
-              id="settingsLectureMinutes"
-              min="15"
-              max="300"
-            >
-
-            <span>min</span>
-
-          </div>
+          <small>
+            Default: 105 minutes
+          </small>
 
         </div>
 
 
-        <div class="setting-row">
+        <div class="settings-group">
 
-          <div class="setting-info">
+          <label for="notesMinutes">
+            Notes time per lecture
+          </label>
 
-            <strong>
-              Daily study capacity
-            </strong>
-
-            <span>
-              Maximum planned study hours
-            </span>
-
-          </div>
-
-          <div class="setting-input">
-
-            <input
-              type="number"
-              id="settingsDailyHours"
-              min="1"
-              max="24"
-              step="0.5"
-            >
-
-            <span>hrs</span>
-
-          </div>
+          <input
+            id="notesMinutes"
+            type="number"
+            min="0"
+          >
 
         </div>
 
 
-        <div class="setting-row">
+        <div class="settings-group">
 
-          <div class="setting-info">
+          <label for="dppMinutes">
+            DPP time per lecture
+          </label>
 
-            <strong>
-              Notes time
-            </strong>
-
-            <span>
-              Time per backlog lecture
-            </span>
-
-          </div>
-
-          <div class="setting-input">
-
-            <input
-              type="number"
-              id="settingsNotesMinutes"
-              min="0"
-            >
-
-            <span>min</span>
-
-          </div>
+          <input
+            id="dppMinutes"
+            type="number"
+            min="0"
+          >
 
         </div>
 
 
-        <div class="setting-row">
+        <div class="settings-group">
 
-          <div class="setting-info">
+          <label for="questionMinutes">
+            Question practice time
+          </label>
 
-            <strong>
-              DPP time
-            </strong>
-
-            <span>
-              Time per DPP
-            </span>
-
-          </div>
-
-          <div class="setting-input">
-
-            <input
-              type="number"
-              id="settingsDppMinutes"
-              min="0"
-            >
-
-            <span>min</span>
-
-          </div>
+          <input
+            id="questionMinutes"
+            type="number"
+            min="0"
+          >
 
         </div>
 
 
-        <div class="setting-row">
+        <div class="settings-group">
 
-          <div class="setting-info">
+          <label for="revisionMinutes">
+            Revision time
+          </label>
 
-            <strong>
-              Question practice
-            </strong>
-
-            <span>
-              Daily independent practice
-            </span>
-
-          </div>
-
-          <div class="setting-input">
-
-            <input
-              type="number"
-              id="settingsQuestionMinutes"
-              min="0"
-            >
-
-            <span>min</span>
-
-          </div>
+          <input
+            id="revisionMinutes"
+            type="number"
+            min="0"
+          >
 
         </div>
 
 
-        <div class="setting-row">
+        <div class="settings-group">
 
-          <div class="setting-info">
+          <label for="dailyHours">
+            Daily available study hours
+          </label>
 
-            <strong>
-              Revision
-            </strong>
-
-            <span>
-              Daily revision time
-            </span>
-
-          </div>
-
-          <div class="setting-input">
-
-            <input
-              type="number"
-              id="settingsRevisionMinutes"
-              min="0"
-            >
-
-            <span>min</span>
-
-          </div>
+          <input
+            id="dailyHours"
+            type="number"
+            min="1"
+            step="0.5"
+          >
 
         </div>
 
@@ -1645,188 +537,239 @@
         <button
           id="saveSettingsBtn"
           class="primary-btn"
+          type="button"
         >
-          Save Settings
+          💾 Save Settings
         </button>
 
       </div>
 
 
-      <!-- Reset -->
-      <div class="danger-zone">
+      <!-- INSTALL APP -->
 
-        <h3>
-          Reset Planner
-        </h3>
+      <div class="settings-card install-card">
+
+        <div class="section-title">
+
+          <h3>📱 NEET Planner App</h3>
+
+        </div>
 
         <p>
-          This will delete your current planner,
-          subjects, chapters and progress from this browser.
+          Install NEET Planner on your device for an
+          app-like experience.
         </p>
 
         <button
-          id="settingsResetBtn"
-          class="danger-btn"
+          id="installAppBtnSettings"
+          class="primary-btn"
+          type="button"
+          style="display:none;"
         >
-          Reset Everything
+          📱 Install NEET Planner App
         </button>
+
+        <p
+          id="installHelpText"
+          class="install-help-text"
+          style="display:none;"
+        >
+          Your browser does not currently offer the
+          app installation option.
+        </p>
 
       </div>
 
     </section>
 
-
-    <!-- =========================
-         BOTTOM NAVIGATION
-    ========================== -->
-    <nav class="bottom-nav">
-
-      <button
-        class="nav-item active"
-        data-page="dashboardPage"
-      >
-
-        <span class="nav-icon">
-          🏠
-        </span>
-
-        <span>
-          Today
-        </span>
-
-      </button>
+  </main>
 
 
-      <button
-        class="nav-item"
-        data-page="chaptersPage"
-      >
+  <!-- ================= JAVASCRIPT ================= -->
 
-        <span class="nav-icon">
-          📚
-        </span>
-
-        <span>
-          Chapters
-        </span>
-
-      </button>
+  <script src="./script.js"></script>
 
 
-      <button
-        class="nav-item"
-        data-page="plannerPage"
-      >
+  <!-- ================= PWA INSTALL + SERVICE WORKER ================= -->
 
-        <span class="nav-icon">
-          📅
-        </span>
-
-        <span>
-          Planner
-        </span>
-
-      </button>
-
-
-      <button
-        class="nav-item"
-        data-page="teachersPage"
-      >
-
-        <span class="nav-icon">
-          👨‍🏫
-        </span>
-
-        <span>
-          Teachers
-        </span>
-
-      </button>
-
-
-      <button
-        class="nav-item"
-        data-page="settingsPage"
-      >
-
-        <span class="nav-icon">
-          ⚙️
-        </span>
-
-        <span>
-          Settings
-        </span>
-
-      </button>
-
-    </nav>
-
-  </div>
-
-
-  <!-- =========================
-       TOAST
-  ========================== -->
-  <div
-    id="toast"
-    class="toast"
-  >
-    <span id="toastMessage"></span>
-  </div>
-
-
-  <!-- =========================
-       MODAL
-  ========================== -->
-  <div
-    id="modalOverlay"
-    class="modal-overlay hidden"
-  >
-
-    <div class="modal">
-
-      <button
-        id="closeModalBtn"
-        class="modal-close"
-      >
-        ×
-      </button>
-
-      <div
-        id="modalContent"
-        class="modal-content"
-      >
-      </div>
-
-    </div>
-
-  </div>
-
-
-  <!-- =========================
-       JAVASCRIPT
-  ========================== -->
-  <script src="script.js"></script>
-
-  <!-- =========================
-       PWA SERVICE WORKER
-  ========================== -->
   <script>
-    if ("serviceWorker" in navigator) {
-      window.addEventListener("load", () => {
-        navigator.serviceWorker.register("./sw.js")
-          .then(() => {
-            console.log("NEET Planner Service Worker registered.");
-          })
-          .catch((error) => {
-            console.error(
-              "NEET Planner Service Worker registration failed:",
-              error
-            );
-          });
+
+    let deferredInstallPrompt = null;
+
+
+    /*
+      Capture browser's PWA install prompt.
+    */
+
+    window.addEventListener(
+      "beforeinstallprompt",
+      (event) => {
+
+        event.preventDefault();
+
+        deferredInstallPrompt = event;
+
+        showInstallButtons();
+
+      }
+    );
+
+
+    /*
+      Show all install buttons.
+    */
+
+    function showInstallButtons() {
+
+      const buttons = [
+
+        document.getElementById("installAppBtn"),
+
+        document.getElementById("installAppBtnDashboard"),
+
+        document.getElementById("installAppBtnSettings")
+
+      ];
+
+      buttons.forEach((button) => {
+
+        if (button) {
+
+          button.style.display = "inline-flex";
+
+          button.onclick = installNEETPlanner;
+
+        }
+
       });
+
+      const helpText =
+        document.getElementById("installHelpText");
+
+      if (helpText) {
+
+        helpText.style.display = "none";
+
+      }
+
     }
+
+
+    /*
+      Install PWA.
+    */
+
+    async function installNEETPlanner() {
+
+      if (!deferredInstallPrompt) {
+
+        return;
+
+      }
+
+      deferredInstallPrompt.prompt();
+
+      const result =
+        await deferredInstallPrompt.userChoice;
+
+      console.log(
+        "PWA installation result:",
+        result.outcome
+      );
+
+      deferredInstallPrompt = null;
+
+      hideInstallButtons();
+
+    }
+
+
+    /*
+      Hide install buttons after installation.
+    */
+
+    function hideInstallButtons() {
+
+      const buttons = [
+
+        document.getElementById("installAppBtn"),
+
+        document.getElementById("installAppBtnDashboard"),
+
+        document.getElementById("installAppBtnSettings")
+
+      ];
+
+      buttons.forEach((button) => {
+
+        if (button) {
+
+          button.style.display = "none";
+
+        }
+
+      });
+
+    }
+
+
+    /*
+      If app is already running in standalone mode,
+      installation button is unnecessary.
+    */
+
+    function isAppInstalled() {
+
+      return (
+        window.matchMedia(
+          "(display-mode: standalone)"
+        ).matches ||
+        window.navigator.standalone === true
+      );
+
+    }
+
+
+    if (isAppInstalled()) {
+
+      hideInstallButtons();
+
+    }
+
+
+    /*
+      Service Worker registration.
+    */
+
+    if ("serviceWorker" in navigator) {
+
+      window.addEventListener(
+        "load",
+        () => {
+
+          navigator.serviceWorker
+            .register("./sw.js")
+            .then(() => {
+
+              console.log(
+                "NEET Planner Service Worker registered."
+              );
+
+            })
+            .catch((error) => {
+
+              console.error(
+                "NEET Planner Service Worker registration failed:",
+                error
+              );
+
+            });
+
+        }
+      );
+
+    }
+
   </script>
 
 </body>
